@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
+import styles from './page.module.css';
 
 const topics = [
   {
@@ -47,89 +48,37 @@ const topics = [
 
 export default function Topics() {
   const [open, setOpen] = useState<number | null>(null);
+  
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #F8FAFF 0%, #FDE7F0 100%)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '2rem 0' }}>
-      <h2 style={{ color: '#1E88E5', fontWeight: 700, fontSize: 24, marginBottom: 32, letterSpacing: 1 }}>หัวข้อความรู้สำหรับคุณแม่</h2>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, maxWidth: 700, width: '100%' }}>
+    <div className={styles.container}>
+      <h2 className={styles.title}>หัวข้อความรู้สำหรับคุณแม่</h2>
+      <div className={styles.grid}>
         {topics.map((topic, idx) => (
-          <button key={topic.title} onClick={() => setOpen(idx)} style={cardStyle}>
-            <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-              <Image src={topic.icon} alt={topic.title} width={48} height={48} style={{ marginRight: 18, borderRadius: 12, background: '#F8FAFF' }} />
-              <span style={{ fontWeight: 600, fontSize: 18, color: '#1E88E5', textAlign: 'left' }}>{topic.title}</span>
+          <button key={topic.title} onClick={() => setOpen(idx)} className={styles.card}>
+            <div className={styles.cardContent}>
+              <Image 
+                src={topic.icon} 
+                alt={topic.title} 
+                width={48} 
+                height={48} 
+                className={styles.icon}
+              />
+              <span className={styles.cardTitle}>{topic.title}</span>
             </div>
           </button>
         ))}
       </div>
       {open !== null && (
-        <div style={modalOverlayStyle} onClick={() => setOpen(null)}>
-          <div style={modalStyle} onClick={e => e.stopPropagation()}>
-            <h3 style={{ color: '#1E88E5', fontWeight: 700, fontSize: 20, marginBottom: 12 }}>{topics[open].title}</h3>
-            <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 16, color: '#333', margin: 0 }}>{topics[open].details}</pre>
-            <button onClick={() => setOpen(null)} style={{ ...buttonStyle, marginTop: 24 }}>ปิด</button>
+        <div className={styles.modalOverlay} onClick={() => setOpen(null)}>
+          <div className={styles.modal} onClick={e => e.stopPropagation()}>
+            <h3 className={styles.modalTitle}>{topics[open].title}</h3>
+            <pre className={styles.modalContent}>{topics[open].details}</pre>
+            <button onClick={() => setOpen(null)} className={styles.button}>
+              ปิด
+            </button>
           </div>
         </div>
       )}
     </div>
   );
-}
-
-const cardStyle: React.CSSProperties = {
-  background: '#fff',
-  borderRadius: 20,
-  boxShadow: '0 2px 12px rgba(30,136,229,0.07)',
-  padding: '1.2rem 1.2rem',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'flex-start',
-  minHeight: 90,
-  cursor: 'pointer',
-  border: 'none',
-  outline: 'none',
-  transition: 'box-shadow 0.2s, transform 0.2s',
-  fontFamily: 'inherit',
-  fontSize: 18,
-  fontWeight: 500,
-  letterSpacing: 0.2,
-};
-
-const modalOverlayStyle: React.CSSProperties = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100vw',
-  height: '100vh',
-  background: 'rgba(30,136,229,0.10)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 1000,
-};
-
-const modalStyle: React.CSSProperties = {
-  background: '#fff',
-  borderRadius: 24,
-  boxShadow: '0 8px 32px rgba(30,136,229,0.13)',
-  padding: '2rem 1.5rem',
-  maxWidth: 400,
-  width: '90vw',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-};
-
-const buttonStyle: React.CSSProperties = {
-  background: 'linear-gradient(90deg, #1DE9B6 0%, #1E88E5 100%)',
-  color: '#fff',
-  border: 'none',
-  borderRadius: 999,
-  padding: '0.9rem 1.2rem',
-  fontWeight: 600,
-  fontSize: 16,
-  textAlign: 'center',
-  textDecoration: 'none',
-  width: '100%',
-  boxShadow: '0 2px 8px rgba(30,136,229,0.08)',
-  letterSpacing: 0.5,
-  transition: 'background 0.2s',
-  cursor: 'pointer',
-}; 
+} 

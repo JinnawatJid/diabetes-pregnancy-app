@@ -166,3 +166,123 @@ a.secondary {
     filter: invert();
   }
 }
+
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #F8FAFF 0%, #FDE7F0 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 6px 32px rgba(0,0,0,0.07);
+  padding: 2.8rem 2.2rem;
+  max-width: 390px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+  }
+}
+
+.avatarContainer {
+  background: linear-gradient(135deg, #E0F7FA 0%, #FDE7F0 100%);
+  border-radius: 50%;
+  padding: 12px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.avatar {
+  border-radius: 50%;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 480px) {
+  .avatar {
+    width: 120px;
+    height: 120px;
+  }
+}
+
+.title {
+  color: #1E88E5;
+  font-weight: 700;
+  font-size: 26px;
+  margin: 1rem 0 0.5rem;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 22px;
+  }
+}
+
+.description {
+  text-align: center;
+  color: #333;
+  font-size: 16px;
+  margin-bottom: 8px;
+  line-height: 1.7;
+}
+
+@media (max-width: 480px) {
+  .description {
+    font-size: 14px;
+  }
+}
+
+.highlight {
+  color: #1E88E5;
+  font-weight: 500;
+}
+
+.subDescription {
+  text-align: center;
+  color: #7B8A9A;
+  font-size: 14px;
+  margin-bottom: 28px;
+}
+
+.button {
+  background: linear-gradient(90deg, #1DE9B6 0%, #1E88E5 100%);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 1rem 1.2rem;
+  font-weight: 600;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  margin-top: 8px;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(30,136,229,0.08);
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(30,136,229,0.12);
+}
+
+@media (max-width: 480px) {
+  .button {
+    padding: 0.9rem 1rem;
+    font-size: 15px;
+  }
+}
