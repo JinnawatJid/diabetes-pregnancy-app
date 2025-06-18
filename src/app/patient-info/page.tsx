@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import styles from './page.module.css';
 
@@ -9,17 +9,43 @@ export default function PatientInfo() {
     age: "",
     gestationalAge: "",
     weightBefore: "",
+    weightCurrent: "",
     height: "",
     illness: ""
   });
   const router = useRouter();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     router.push("/topics");
   };
+
+  // Calculate BMI when weightCurrent and height are available
+  const bmi = useMemo(() => {
+    const weight = parseFloat(form.weightCurrent);
+    const height = parseFloat(form.height);
+
+    if (weight && height && height > 0) {
+      // Convert height from cm to meters and calculate BMI
+      const heightInMeters = height / 100;
+      const bmiValue = weight / (heightInMeters * heightInMeters);
+      return bmiValue.toFixed(1);
+    }
+    return null;
+  }, [form.weightCurrent, form.height]);
+
+  // Get BMI category
+  const getBMICategory = (bmiValue: number) => {
+    if (bmiValue < 18.5) return "น้ำหนักต่ำกว่าเกณฑ์";
+    if (bmiValue < 25) return "น้ำหนักปกติ";
+    if (bmiValue < 30) return "น้ำหนักเกิน";
+    return "อ้วน";
+  };
+
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.form}>
@@ -37,7 +63,7 @@ export default function PatientInfo() {
           type="number"
           value={form.age}
           onChange={handleChange}
-          placeholder="อายุหญิงตั้งครรภ์ (ปี)"
+          placeholder="อายุ (ปี)"
           className={styles.input}
           required
         />
@@ -60,6 +86,15 @@ export default function PatientInfo() {
           required
         />
         <input
+          name="weightCurrent"
+          type="number"
+          value={form.weightCurrent}
+          onChange={handleChange}
+          placeholder="น้ำหนักปัจจุบัน (กก.)"
+          className={styles.input}
+          required
+        />
+        <input
           name="height"
           type="number"
           value={form.height}
@@ -68,13 +103,26 @@ export default function PatientInfo() {
           className={styles.input}
           required
         />
-        <textarea
-          name="illness"
-          value={form.illness}
-          onChange={handleChange}
-          placeholder="โรคประจำตัว (ถ้ามี)"
-          className={styles.textarea}
-        />
+
+        {/* BMI Display */}
+        <div className={styles.bmiContainer}>
+          <h3 className={styles.bmiTitle}>ดัชนีมวลกาย (BMI)</h3>
+          <div className={styles.bmiValue}>
+            {bmi ? (
+              <>
+                <span className={styles.bmiNumber}>{bmi}</span>
+                <span className={styles.bmiCategory}>
+                  {getBMICategory(parseFloat(bmi))}
+                </span>
+              </>
+            ) : (
+              <span className={styles.bmiPlaceholder}>
+                กรุณากรอกน้ำหนักและส่วนสูงเพื่อคำนวณ BMI
+              </span>
+            )}
+          </div>
+        </div>
+
         <button type="submit" className={styles.button}>
           บันทึกข้อมูล
         </button>

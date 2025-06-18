@@ -16,12 +16,14 @@ export default function Home() {
             priority
           />
         </div>
-        <h1 className={styles.title}>น้องใจใส</h1>
+        <h1 className={styles.title}>
+          สวัสดีค่ะ คุณแม่ <br/>
+          น้องเบาใจ
+        </h1>
         <p className={styles.description}>
-          ดูแลเบาหวานขณะตั้งครรภ์<br/>
           <span className={styles.highlight}>
-            เครื่องมือช่วยเหลือคุณแม่
-            ในการทำความเข้าใจและจัดการภาวะเบาหวานขณะตั้งครรภ์
+            เป็นเครื่องมือช่วยเหลือคุณแม่
+            ในการทำความเข้าใจและจัดการภาวะเบาหวานขณะตั้งครรภ์นะคะ
           </span>
         </p>
         <p className={styles.subDescription}>
