@@ -1,5 +1,30 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Environment Setup
+
+### Supabase Configuration
+
+1. Create a `.env.local` file in the root directory
+2. Add your Supabase credentials:
+
+```bash
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url_here
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key_here
+```
+
+To get these values:
+1. Go to your Supabase project dashboard
+2. Navigate to Settings > API
+3. Copy the "Project URL" and "anon public" key
+4. Replace the placeholder values in `.env.local`
+
+Example:
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+```
+
 ## Getting Started
 
 First, run the development server:

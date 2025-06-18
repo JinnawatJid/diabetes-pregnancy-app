@@ -106,6 +106,28 @@
   transform: translateY(0);
 }
 
+.button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.button:disabled:hover {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(30,136,229,0.08);
+}
+
+.errorMessage {
+  background: #ffebee;
+  color: #c62828;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ffcdd2;
+  font-size: 14px;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
 @media (max-width: 480px) {
   .button {
     padding: 0.9rem 1rem;
