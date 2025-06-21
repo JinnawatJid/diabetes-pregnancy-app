@@ -5,6 +5,12 @@ import { usePatient } from "../context/PatientContext";
 import styles from './page.module.css';
 import { supabase } from "../../lib/supabase";
 import * as XLSX from "xlsx";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const topics = [
   {
@@ -62,7 +68,7 @@ export default function Topics() {
         setDownloading(false);
         return;
       }
-      // Remove UUID and move patient_number to first column
+      // Remove UUID and move patient_number to first column, format dates to Thailand time
       const exportData = data.map((row) => {
         const {
           patient_number,
@@ -74,11 +80,11 @@ export default function Topics() {
           height,
           bmi,
           bmi_category,
+          illness,
           created_at,
           updated_at,
-          // id, // Exclude id
-          ...rest
         } = row;
+        const formatThai = (dateStr: string | null | undefined) => dateStr ? dayjs.utc(dateStr).tz('Asia/Bangkok').format('YYYY-MM-DD HH:mm:ss') : '';
         return {
           'รหัสผู้ป่วย': patient_number,
           'ชื่อผู้ใช้': username,
@@ -89,8 +95,9 @@ export default function Topics() {
           'ส่วนสูง': height,
           'BMI': bmi,
           'หมวด BMI': bmi_category,
-          'สร้างเมื่อ': created_at,
-          'อัปเดตเมื่อ': updated_at,
+          'โรคประจำตัว': illness,
+          'สร้างเมื่อ': formatThai(created_at),
+          'อัปเดตเมื่อ': formatThai(updated_at),
         };
       });
       // Convert to worksheet
