@@ -289,6 +289,55 @@
   line-height: 1.6;
 }
 
+.bmiModalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+}
+
+.bmiResultValue {
+  background: linear-gradient(135deg, #E3F2FD 0%, #FDE7F0 100%);
+  border-radius: 16px;
+  padding: 0.8rem 1.5rem;
+  font-size: 28px;
+  font-weight: 700;
+  color: #1E88E5;
+  border: 1px solid #E1F5FE;
+}
+
+.bmiCategoryTitle {
+  font-size: 22px;
+  font-weight: 700;
+  color: #c62828;
+  margin-top: 0.5rem;
+}
+
+.bmiCategoryDescription {
+  font-size: 16px;
+  color: #424242;
+  margin-bottom: 1rem;
+}
+
+.bmiCategoryImage {
+  width: 100%;
+  height: auto;
+  max-width: 300px;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+.bmiPlaceholder {
+  color: #757575;
+  padding: 1rem;
+  background: #fafafa;
+  border-radius: 12px;
+  border: 1px dashed #ccc;
+  text-align: center;
+  width: 100%;
+}
+
 @media (max-width: 480px) {
   .modalContent {
     font-size: 14px;

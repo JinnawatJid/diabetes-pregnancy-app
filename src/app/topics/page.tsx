@@ -12,6 +12,29 @@ import timezone from "dayjs/plugin/timezone";
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
+const bmiDetails: { [key: string]: { title: string; description: string; image: string; } } = {
+  'ผอม': {
+    title: "น้ำหนักต่ำกว่าเกณฑ์",
+    description: "น้ำหนักที่เพิ่มได้ตลอดการตั้งครรภ์ 12.5 - 18 kg",
+    image: "/Underweight.png",
+  },
+  'ปกติ': {
+    title: "น้ำหนักตามเกณฑ์",
+    description: "น้ำหนักที่เพิ่มได้ตลอดการตั้งครรภ์ 11.5 - 16 kg",
+    image: "/Normal.png",
+  },
+  'ท้วม': {
+    title: "น้ำหนักสูงกว่าเกณฑ์",
+    description: "น้ำหนักที่เพิ่มได้ตลอดการตั้งครรภ์ 7 - 11.5 kg",
+    image: "/Overweight.png",
+  },
+  'อ้วน': {
+    title: "อ้วน",
+    description: "น้ำหนักที่เพิ่มได้ตลอดการตั้งครรภ์ 5 - 9 kg",
+    image: "/Obese.png",
+  },
+};
+
 const topics = [
   {
     title: "bmi. แปลผล",
@@ -50,6 +73,7 @@ export default function Topics() {
   const { patientData } = usePatient();
   const [downloading, setDownloading] = useState(false);
   const [showDownload, setShowDownload] = useState(false);
+  const bmiTopicIndex = topics.findIndex(t => t.title === 'bmi. แปลผล');
 
   // Download handler
   const handleDownload = async () => {
@@ -190,8 +214,43 @@ export default function Topics() {
       {open !== null && (
         <div className={styles.modalOverlay} onClick={() => setOpen(null)}>
           <div className={styles.modal} onClick={e => e.stopPropagation()}>
-            <h3 className={styles.modalTitle}>{topics[open].title}</h3>
-            <pre className={styles.modalContent}>{topics[open].details}</pre>
+            {open === bmiTopicIndex ? (
+              <div className={styles.bmiModalContent}>
+                <h3 className={styles.modalTitle}>ค่า BMI</h3>
+                <div className={styles.bmiResultValue}>
+                  {patientData?.bmi ? patientData.bmi : '-'}
+                </div>
+                
+                <h3 className={styles.modalTitle} style={{ marginTop: '1rem' }}>แปลผล</h3>
+
+                {patientData?.bmiCategory && bmiDetails[patientData.bmiCategory] ? (
+                  <>
+                    <div className={styles.bmiCategoryTitle}>
+                      {bmiDetails[patientData.bmiCategory].title}
+                    </div>
+                    <div className={styles.bmiCategoryDescription}>
+                      {bmiDetails[patientData.bmiCategory].description}
+                    </div>
+                    <Image 
+                      src={bmiDetails[patientData.bmiCategory].image}
+                      alt={bmiDetails[patientData.bmiCategory].title}
+                      width={250}
+                      height={150}
+                      className={styles.bmiCategoryImage}
+                      priority
+                    />
+                  </>
+                ) : (
+                  <div className={styles.bmiPlaceholder}>กรุณากรอกข้อมูลเพื่อดูผล BMI ของคุณ</div>
+                )}
+              </div>
+            ) : (
+              <>
+                <h3 className={styles.modalTitle}>{topics[open].title}</h3>
+                <pre className={styles.modalContent}>{topics[open].details}</pre>
+              </>
+            )}
+
             <button onClick={() => setOpen(null)} className={styles.button}>
               ปิด
             </button>
