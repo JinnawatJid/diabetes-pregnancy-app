@@ -13,17 +13,17 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 const bmiDetails: { [key: string]: { title: string; description: string; image: string; } } = {
-  'ผอม': {
+  'น้ำหนักต่ำกว่าเกณฑ์': {
     title: "น้ำหนักต่ำกว่าเกณฑ์",
     description: "น้ำหนักที่เพิ่มได้ตลอดการตั้งครรภ์ 12.5 - 18 kg",
     image: "/Underweight.png",
   },
-  'ปกติ': {
+  'น้ำหนักตามเกณฑ์': {
     title: "น้ำหนักตามเกณฑ์",
     description: "น้ำหนักที่เพิ่มได้ตลอดการตั้งครรภ์ 11.5 - 16 kg",
     image: "/Normal.png",
   },
-  'ท้วม': {
+  'น้ำหนักสูงกว่าเกณฑ์': {
     title: "น้ำหนักสูงกว่าเกณฑ์",
     description: "น้ำหนักที่เพิ่มได้ตลอดการตั้งครรภ์ 7 - 11.5 kg",
     image: "/Overweight.png",
