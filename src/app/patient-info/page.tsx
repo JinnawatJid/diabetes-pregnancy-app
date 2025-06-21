@@ -89,9 +89,9 @@ export default function PatientInfo() {
 
   // Get BMI category
   const getBMICategory = (bmiValue: number) => {
-    if (bmiValue < 18.5) return "ผอม";
-    if (bmiValue < 24.9) return "ปกติ";
-    if (bmiValue < 29.9) return "ท้วม";
+    if (bmiValue < 18.5) return "น้ำหนักต่ำกว่าเกณฑ์";
+    if (bmiValue < 24.9) return "น้ำหนักตามเกณฑ์";
+    if (bmiValue < 29.9) return "น้ำหนักสูงกว่าเกณฑ์";
     return "อ้วน";
   };
 

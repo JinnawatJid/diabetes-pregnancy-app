@@ -35,6 +35,37 @@ const bmiDetails: { [key: string]: { title: string; description: string; image: 
   },
 };
 
+const foodDetails = {
+  'น้ำหนักต่ำกว่าเกณฑ์': { // Underweight
+    pages: [
+      {
+        type: 'text',
+        title: 'อาหารที่แนะนำให้รับประทาน',
+        subtitle: 'น้ำหนักต่ำกว่าเกณฑ์',
+        content: [
+          'เน้นการรับประทานที่มีโปรตีนสูง เช่น อกไก่ ไข่ ปลาทะเล นมวัว/นมถั่วเหลือง เป็นต้น',
+          'รับประทานคาร์โบไฮเดรตเชิงซ้อน เช่น ข้าวกล้อง ข้าวโอ๊ต ฟักทอง เป็นต้น',
+          'รับประทานผลไม้ที่มีน้ำตาลต่ำ เช่น แอปเปิ้ล ฝรั่ง ชมพู่ เป็นต้น',
+          'รับประทานไขมันดี เช่น น้ำมันรำข้าว น้ำมันมะกอก เป็นต้น',
+          'หลีกเลี่ยง ชา กาแฟ น้ำอัดลม ขนมหวานจัด เป็นต้น',
+        ],
+      },
+      {
+        type: 'image',
+        title: 'ตัวอย่างอาหารที่แนะนำ',
+        subtitle: 'น้ำหนักต่ำกว่าเกณฑ์',
+        content: [
+          { image: '/chickenBreast.png', description: 'เน้นการรับประทานที่มีโปรตีนสูง เช่น อกไก่' },
+          { image: '/brownRice.png', description: 'รับประทานคาร์โบไฮเดรตเชิงซ้อน เช่น ข้าวกล้อง' },
+          { image: '/apple1.png', description: 'รับประทานผลไม้ที่มีน้ำตาลต่ำ เช่น แอปเปิ้ล' },
+          { image: '/oliveOil.png', description: 'รับประทานไขมันดี เช่น น้ำมันมะกอก' },
+        ],
+      },
+    ],
+  },
+  // Other BMI categories can be added here later
+};
+
 const topics = [
   {
     title: "bmi. แปลผล",
@@ -73,7 +104,10 @@ export default function Topics() {
   const { patientData } = usePatient();
   const [downloading, setDownloading] = useState(false);
   const [showDownload, setShowDownload] = useState(false);
+  const [foodModalPage, setFoodModalPage] = useState(0); // For food modal pagination
   const bmiTopicIndex = topics.findIndex(t => t.title === 'bmi. แปลผล');
+  const foodTopicIndex = topics.findIndex(t => t.title === 'อาหาร');
+  const activeFoodDetails = patientData?.bmiCategory ? foodDetails[patientData.bmiCategory as keyof typeof foodDetails] : null;
 
   // Download handler
   const handleDownload = async () => {
@@ -132,6 +166,11 @@ export default function Topics() {
     } finally {
       setDownloading(false);
     }
+  };
+
+  const handleModalClose = () => {
+    setOpen(null);
+    setFoodModalPage(0); // Reset food modal page on close
   };
 
   return (
@@ -212,7 +251,7 @@ export default function Topics() {
         ))}
       </div>
       {open !== null && (
-        <div className={styles.modalOverlay} onClick={() => setOpen(null)}>
+        <div className={styles.modalOverlay} onClick={handleModalClose}>
           <div className={styles.modal} onClick={e => e.stopPropagation()}>
             {open === bmiTopicIndex ? (
               <div className={styles.bmiModalContent}>
@@ -244,6 +283,34 @@ export default function Topics() {
                   <div className={styles.bmiPlaceholder}>กรุณากรอกข้อมูลเพื่อดูผล BMI ของคุณ</div>
                 )}
               </div>
+            ) : open === foodTopicIndex ? (
+              <div className={styles.foodModalContent}>
+                {activeFoodDetails && activeFoodDetails.pages[foodModalPage] ? (
+                  <>
+                    <h3 className={styles.modalTitle}>{activeFoodDetails.pages[foodModalPage].title}</h3>
+                    <div className={styles.foodCategorySubtitle}>{activeFoodDetails.pages[foodModalPage].subtitle}</div>
+
+                    {activeFoodDetails.pages[foodModalPage].type === 'text' && (
+                      <ul className={styles.foodTextList}>
+                        {(activeFoodDetails.pages[foodModalPage].content as string[]).map((item, i) => <li key={i}>{item}</li>)}
+                      </ul>
+                    )}
+
+                    {activeFoodDetails.pages[foodModalPage].type === 'image' && (
+                      <div className={styles.foodImageGrid}>
+                        {(activeFoodDetails.pages[foodModalPage].content as { image: string; description: string }[]).map((item, i) => (
+                          <div key={i} className={styles.foodImageItem}>
+                            <Image src={item.image} alt={item.description} width={150} height={100} className={styles.foodImage} />
+                            <p>{item.description}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <div className={styles.bmiPlaceholder}>กรุณากรอกข้อมูลเพื่อดูคำแนะนำด้านอาหาร</div>
+                )}
+              </div>
             ) : (
               <>
                 <h3 className={styles.modalTitle}>{topics[open].title}</h3>
@@ -251,9 +318,16 @@ export default function Topics() {
               </>
             )}
 
-            <button onClick={() => setOpen(null)} className={styles.button}>
-              ปิด
-            </button>
+            <div className={styles.modalButtonRow}>
+              {open === foodTopicIndex && activeFoodDetails && foodModalPage < activeFoodDetails.pages.length - 1 && (
+                <button onClick={() => setFoodModalPage(p => p + 1)} className={styles.button}>
+                  ถัดไป
+                </button>
+              )}
+              <button onClick={handleModalClose} className={styles.button}>
+                ปิด
+              </button>
+            </div>
           </div>
         </div>
       )}

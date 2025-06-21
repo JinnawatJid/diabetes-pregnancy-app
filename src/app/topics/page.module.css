@@ -377,4 +377,92 @@
     font-size: 15px;
     margin-top: 20px;
   }
+}
+
+.foodModalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
+.foodCategorySubtitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1E88E5;
+  background: #e3f2fd;
+  padding: 0.3rem 1rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+
+.foodTextList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  width: 100%;
+  color: #333;
+}
+
+.foodTextList li {
+  padding: 0.5rem 0.2rem;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 15px;
+}
+.foodTextList li:last-child {
+  border-bottom: none;
+}
+.foodTextList li::before {
+  content: '✓';
+  color: #1DE9B6;
+  font-weight: bold;
+  margin-right: 0.8rem;
+}
+
+.foodImageGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.foodImageItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.foodImageItem p {
+  font-size: 14px;
+  color: #424242;
+  margin: 0;
+}
+
+.foodImage {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.modalButtonRow {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+.modalButtonRow .button {
+  flex: 1;
+  margin-top: 0;
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    font-size: 14px;
+  }
 } 
