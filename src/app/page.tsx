@@ -6,6 +6,9 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <div className={styles.card}>
+      <h1 className={styles.titleHead}>
+          สวัสดีค่ะ คุณแม่
+        </h1>
         <div className={styles.avatarContainer}>
           <Image 
             src="/avatar.png" 
@@ -16,10 +19,7 @@ export default function Home() {
             priority
           />
         </div>
-        <h1 className={styles.title}>
-          สวัสดีค่ะ คุณแม่ <br/>
-          น้องเบาใจ
-        </h1>
+        <h1 className={styles.title}>น้องเบาใจ</h1>
         <p className={styles.description}>
           <span className={styles.highlight}>
             เป็นเครื่องมือช่วยเหลือคุณแม่

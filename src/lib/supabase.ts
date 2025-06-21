@@ -16,43 +16,40 @@ export interface Database {
       patients: {
         Row: {
           id: string
+          patient_number: string
           username: string
           age: number
           gestational_age: number
           weight_before: number
-          weight_current: number
           height: number
           bmi: number | null
           bmi_category: string | null
-          illness: string | null
           created_at: string
           updated_at: string
         }
         Insert: {
           id?: string
+          patient_number?: string
           username: string
           age: number
           gestational_age: number
           weight_before: number
-          weight_current: number
           height: number
           bmi?: number | null
           bmi_category?: string | null
-          illness?: string | null
           created_at?: string
           updated_at?: string
         }
         Update: {
           id?: string
+          patient_number?: string
           username?: string
           age?: number
           gestational_age?: number
           weight_before?: number
-          weight_current?: number
           height?: number
           bmi?: number | null
           bmi_category?: string | null
-          illness?: string | null
           created_at?: string
           updated_at?: string
         }

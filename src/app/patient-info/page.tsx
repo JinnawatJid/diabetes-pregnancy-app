@@ -10,9 +10,7 @@ export default function PatientInfo() {
     age: "",
     gestationalAge: "",
     weightBefore: "",
-    weightCurrent: "",
     height: "",
-    illness: ""
   });
   const [validationError, setValidationError] = useState<string | null>(null);
   const router = useRouter();
@@ -37,13 +35,6 @@ export default function PatientInfo() {
     const weightBefore = parseFloat(form.weightBefore);
     if (isNaN(weightBefore) || weightBefore < 30 || weightBefore > 200) {
       return "น้ำหนักก่อนตั้งครรภ์ควรอยู่ระหว่าง 30-200 กก.";
-    }
-    const weightCurrent = parseFloat(form.weightCurrent);
-    if (isNaN(weightCurrent) || weightCurrent < 30 || weightCurrent > 250) {
-      return "น้ำหนักปัจจุบันควรอยู่ระหว่าง 30-250 กก.";
-    }
-    if (weightCurrent < weightBefore) {
-      return "น้ำหนักปัจจุบันควรมากกว่าหรือเท่ากับน้ำหนักก่อนตั้งครรภ์";
     }
     const height = parseFloat(form.height);
     if (isNaN(height) || height < 120 || height > 220) {
@@ -82,9 +73,9 @@ export default function PatientInfo() {
     }
   };
 
-  // Calculate BMI when weightCurrent and height are available
+  // Calculate BMI when weightBefore and height are available
   const bmi = useMemo(() => {
-    const weight = parseFloat(form.weightCurrent);
+    const weight = parseFloat(form.weightBefore);
     const height = parseFloat(form.height);
 
     if (weight && height && height > 0) {
@@ -94,15 +85,14 @@ export default function PatientInfo() {
       return bmiValue.toFixed(1);
     }
     return null;
-  }, [form.weightCurrent, form.height]);
+  }, [form.weightBefore, form.height]);
 
   // Get BMI category
   const getBMICategory = (bmiValue: number) => {
     if (bmiValue < 18.5) return "ผอม";
-    if (bmiValue < 23) return "ปกติ";
-    if (bmiValue < 25) return "น้ำหนักเกิน";
-    if (bmiValue < 30) return "อ้วนระดับ 1";
-    return "อ้วนระดับ 2";
+    if (bmiValue < 24.9) return "ปกติ";
+    if (bmiValue < 29.9) return "ท้วม";
+    return "อ้วน";
   };
 
   return (
@@ -145,15 +135,6 @@ export default function PatientInfo() {
           required
         />
         <input
-          name="weightCurrent"
-          type="number"
-          value={form.weightCurrent}
-          onChange={handleChange}
-          placeholder="น้ำหนักปัจจุบัน (กก.)"
-          className={styles.input}
-          required
-        />
-        <input
           name="height"
           type="number"
           value={form.height}
@@ -176,7 +157,7 @@ export default function PatientInfo() {
               </>
             ) : (
               <span className={styles.bmiPlaceholder}>
-                กรุณากรอกน้ำหนักและส่วนสูงเพื่อคำนวณ BMI
+                กรุณากรอกน้ำหนักก่อนตั้งครรภ์และส่วนสูงเพื่อคำนวณ BMI
               </span>
             )}
           </div>

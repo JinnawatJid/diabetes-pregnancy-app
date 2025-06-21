@@ -76,11 +76,9 @@ export default function Topics() {
           age,
           gestational_age,
           weight_before,
-          weight_current,
           height,
           bmi,
           bmi_category,
-          illness,
           created_at,
           updated_at,
         } = row;
@@ -91,11 +89,9 @@ export default function Topics() {
           'อายุ': age,
           'อายุครรภ์': gestational_age,
           'น้ำหนักก่อนตั้งครรภ์': weight_before,
-          'น้ำหนักปัจจุบัน': weight_current,
           'ส่วนสูง': height,
           'BMI': bmi,
           'หมวด BMI': bmi_category,
-          'โรคประจำตัว': illness,
           'สร้างเมื่อ': formatThai(created_at),
           'อัปเดตเมื่อ': formatThai(updated_at),
         };
@@ -157,10 +153,6 @@ export default function Topics() {
             <div className={styles.patientInfoItem}>
               <span className={styles.patientInfoLabel}>น้ำหนักก่อนตั้งครรภ์:</span>
               <span className={styles.patientInfoValue}>{patientData.weightBefore} กก.</span>
-            </div>
-            <div className={styles.patientInfoItem}>
-              <span className={styles.patientInfoLabel}>น้ำหนักปัจจุบัน:</span>
-              <span className={styles.patientInfoValue}>{patientData.weightCurrent} กก.</span>
             </div>
             <div className={styles.patientInfoItem}>
               <span className={styles.patientInfoLabel}>ส่วนสูง:</span>

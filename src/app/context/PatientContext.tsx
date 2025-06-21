@@ -7,7 +7,6 @@ interface PatientData {
   age: string;
   gestationalAge: string;
   weightBefore: string;
-  weightCurrent: string;
   height: string;
   bmi?: string;
   bmiCategory?: string;
@@ -45,7 +44,6 @@ export function PatientProvider({ children }: { children: ReactNode }) {
         age: parseInt(data.age),
         gestational_age: parseInt(data.gestationalAge),
         weight_before: parseFloat(data.weightBefore),
-        weight_current: parseFloat(data.weightCurrent),
         height: parseFloat(data.height),
         bmi: data.bmi ? parseFloat(data.bmi) : null,
         bmi_category: data.bmiCategory || null,
@@ -96,7 +94,6 @@ export function PatientProvider({ children }: { children: ReactNode }) {
           age: result.age.toString(),
           gestationalAge: result.gestational_age.toString(),
           weightBefore: result.weight_before.toString(),
-          weightCurrent: result.weight_current.toString(),
           height: result.height.toString(),
           bmi: result.bmi?.toString(),
           bmiCategory: result.bmi_category || undefined,
