@@ -620,7 +620,7 @@
   gap: 1.5rem;
   flex: 1;
   overflow-y: auto;
-  overflow-x: auto;
+  overflow-x: hidden;
   max-height: 60vh;
   padding-right: 0.5rem;
 }
@@ -673,7 +673,7 @@
   font-size: 15px;
   line-height: 1.7;
   overflow-y: auto;
-  overflow-x: auto;
+  overflow-x: hidden;
   max-height: 60vh;
   padding-right: 0.5rem;
   flex: 1;
