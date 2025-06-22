@@ -372,6 +372,37 @@ const exerciseContent = {
   },
 };
 
+const complicationsContent = [
+  {
+    title: "ความดันโลหิตสูงขณะตั้งครรภ์ (PIH / preeclampsia)",
+    description: "เป็นภาวะแทรกซ้อนที่อาจทำให้มารดามีอาการปวดศีรษะ ตาพร่า บวมมาก โปรตีนรั่วในปัสสาวะ และไตทำงานผิดปกติ หากรุนแรงอาจเกิดภาวะชัก (eclampsia) ตับผิดปกติ เกล็ดเลือดต่ำ หรือรกลอกตัวก่อนกำหนด ซึ่งเป็นอันตรายต่อชีวิตทั้งมารดาและทารก"
+  },
+  {
+    title: "ครรภ์เป็นพิษ (Eclampsia)",
+    description: "หากควบคุมน้ำตาลไม่ดี อาจพัฒนาเป็นภาวะรุนแรงได้ โดยมีความดันโลหิตสูงร่วมกับโปรตีนในปัสสาวะ อาจมีอาการปวดหัว ตาพร่า บวมตามร่างกาย และเจ็บชายโครงขวา หากรุนแรงอาจเกิดภาวะชัก (Eclampsia), ตับวาย, ไตวาย หรือรกลอกตัวก่อนกำหนด อันตรายถึงชีวิตทั้งมารดาและทารก"
+  },
+  {
+    title: "ติดเชื้อทางเดินปัสสาวะ",
+    description: "เกิดได้ง่ายขึ้นในหญิงตั้งครรภ์ที่มีน้ำตาลสูงเนื่องจากการเผาผลาญคาร์โบไฮเดรตที่ผิดปกติ มีผลให้เกิดการเปลี่ยนแปลงภาวะความเป็นกรดด่างในช่องคลอด เกิดการอักเสบและติดเชื้อได้ง่าย"
+  },
+  {
+    title: "น้ำคร่ำมาก (Polyhydramnios)",
+    description: "น้ำตาลสูงกระตุ้นการปัสสาวะของทารก ทำให้มีน้ำคร่ำมาก มักพบในหญิงตั้งครรภ์ที่เป็นเบาหวาน หรือทารกในครรภ์มีความผิดปกติ เช่น กลืนหรือดูดซึมน้ำคร่ำไม่ได้ ภาวะนี้อาจทำให้มดลูกขยายเร็ว เสี่ยงต่อการคลอดก่อนกำหนด ทารกอยู่ในท่าผิดปกติ หรือเกิดภาวะรกลอกตัวก่อนกำหนด"
+  },
+  {
+    title: "คลอดยาก/ต้องผ่าคลอด",
+    description: "เพราะทารกตัวโตผิดปกติ (macrosomia) ทำให้เกิดการคลอดยาก มีโอกาสไหล่ติดขณะคลอดได้สูง เพิ่มอุบัติการณ์การช่วยคลอดด้วยสูติศาสตร์หัตถการและอัตราผ่าตัดคลอด ทารกได้รับบาดเจ็บขณะคลอด เช่น เกิดอันตรายต่อเส้นประสาทบริเวณแขน เป็นอัมพาตบริเวณใบหน้า"
+  },
+  {
+    title: "เสี่ยงเบาหวานชนิดที่ 2 หลังคลอด",
+    description: "โดยเฉพาะหากไม่ได้ควบคุมอย่างเหมาะสมในระหว่างตั้งครรภ์ เพราะร่างกายมีแนวโน้มดื้อต่ออินซูลินต่อเนื่องแม้คลอดแล้ว หากไม่ควบคุมน้ำหนัก อาหาร และออกกำลังกายอย่างเหมาะสม ความเสี่ยงจะยิ่งเพิ่มขึ้น"
+  },
+  {
+    title: "เสี่ยงแท้ง/คลอดก่อนกำหนด",
+    description: "ระดับน้ำตาลในเลือดที่สูงผิดปกติอาจส่งผลต่อการเจริญเติบโตของรกและทารกในครรภ์ ทำให้รกเสื่อมหรือทำงานผิดปกติเร็วขึ้น รวมถึงเพิ่มโอกาสเกิดภาวะน้ำคร่ำมากหรือความดันโลหิตสูง ซึ่งล้วนเป็นปัจจัยกระตุ้นให้มดลูกบีบตัวก่อนกำหนด"
+  }
+];
+
 export default function Topics() {
   const [open, setOpen] = useState<number | null>(null);
   const { patientData } = usePatient();
@@ -387,6 +418,7 @@ export default function Topics() {
   const insulinTopicIndex = topics.findIndex(t => t.title === 'หญิงตั้งครรภ์ที่ฉีดอินซูลิน');
   const sugarTopicIndex = topics.findIndex(t => t.title === 'ค่าระดับน้ำตาล และวิธีการจัดการ');
   const exerciseTopicIndex = topics.findIndex(t => t.title === 'ออกกำลังกาย');
+  const complicationsTopicIndex = topics.findIndex(t => t.title === 'ภาวะแทรกซ้อน');
   const activeFoodDetails = patientData?.bmiCategory ? foodDetails[patientData.bmiCategory as keyof typeof foodDetails] : null;
 
   // Download handler
@@ -537,6 +569,7 @@ export default function Topics() {
       {open !== null && (
         <div className={styles.modalOverlay} onClick={handleModalClose}>
           <div className={styles.modal} onClick={e => e.stopPropagation()}>
+            <button onClick={handleModalClose} className={styles.closeButton}>&times;</button>
             {open === bmiTopicIndex ? (
               <div className={styles.bmiModalContent}>
                 <h3 className={styles.modalTitle}>ค่า BMI</h3>
@@ -768,6 +801,20 @@ export default function Topics() {
                   </>
                 )}
               </div>
+            ) : open === complicationsTopicIndex ? (
+              <>
+                <h3 className={styles.modalTitle}>ภาวะแทรกซ้อน</h3>
+                <div className={styles.complicationsModalContent}>
+                  <div className={styles.complicationsGrid}>
+                    {complicationsContent.map((comp, i) => (
+                      <div key={i} className={styles.complicationCard}>
+                        <h4 className={styles.complicationCardTitle}>{comp.title}</h4>
+                        <p className={styles.complicationCardDescription}>{comp.description}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
             ) : (
               <>
             <h3 className={styles.modalTitle}>{topics[open].title}</h3>
@@ -796,9 +843,20 @@ export default function Topics() {
                   กลับสู่เมนู
                 </button>
               ) : null}
-              <button onClick={handleModalClose} className={styles.button}>
-                กลับสู่หน้าหลัก
-            </button>
+              
+              {/* Main close button appears for most modals */}
+              {open !== complicationsTopicIndex && (
+                 <button onClick={handleModalClose} className={styles.button}>
+                    กลับสู่หน้าหลัก
+                </button>
+              )}
+
+              {/* Special layout for food modal buttons */}
+              {open === foodTopicIndex && (
+                <button onClick={handleModalClose} className={styles.button}>
+                  กลับสู่หน้าหลัก
+                </button>
+              )}
             </div>
           </div>
         </div>

@@ -260,6 +260,25 @@
   flex-direction: column;
   align-items: center;
   overflow: hidden;
+  position: relative;
+}
+
+.closeButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #aaa;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  z-index: 10;
+  transition: color 0.2s ease;
+}
+.closeButton:hover {
+  color: #333;
 }
 
 @media (max-width: 480px) {
@@ -964,4 +983,94 @@
   .sugarUnit {
     font-size: 14px;
   }
-} 
+}
+
+.complicationsModalContent {
+  width: 100%;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 0.5rem; /* for scrollbar spacing */
+}
+
+.complicationsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  padding-top: 0.5rem;
+}
+
+.complicationCard {
+  background: #fff;
+  border: 1px solid #E3F2FD;
+  border-top: 4px solid #81D4FA; /* Light blue top border */
+  border-radius: 12px;
+  padding: 1.25rem;
+  box-shadow: 0 4px 12px rgba(30,136,229,0.08);
+  transition: all 0.2s ease-in-out;
+}
+
+.complicationCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(30,136,229,0.12);
+}
+
+.complicationCardTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: #01579B; /* Darker blue for contrast */
+  margin: 0 0 0.75rem 0;
+}
+
+.complicationCardDescription {
+  font-size: 15px;
+  line-height: 1.7;
+  color: #37474F; /* Softer, dark gray for text */
+  margin: 0;
+}
+
+.complicationsModalContent::-webkit-scrollbar {
+  width: 6px;
+}
+.complicationsModalContent::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+.complicationsModalContent::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+.complicationsModalContent::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    font-size: 14px;
+    max-height: 65vh;
+  }
+  
+  .bmiModalContent,
+  .foodModalContent,
+  .insulinModalContent,
+  .sugarModalContent,
+  .exerciseModalContent,
+  .complicationsModalContent {
+    max-height: 65vh;
+  }
+  
+  .insulinDetailContent,
+  .sugarDetailContent,
+  .exerciseDetailContent {
+    max-height: 55vh;
+    font-size: 14px;
+  }
+  
+  .sugarInput {
+    font-size: 14px;
+    padding: 0.7rem 0.8rem;
+  }
+  
+  .sugarUnit {
+    font-size: 14px;
+  }
+}
