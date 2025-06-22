@@ -610,4 +610,188 @@
     max-height: 55vh;
     font-size: 14px;
   }
+}
+
+.sugarModalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  gap: 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: auto;
+  max-height: 60vh;
+  padding-right: 0.5rem;
+}
+
+.sugarInputContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.sugarInput {
+  flex: 1;
+  padding: 0.8rem 1rem;
+  border: 2px solid #E3F2FD;
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: inherit;
+  background: #fff;
+  color: #333;
+  transition: border-color 0.2s ease;
+}
+
+.sugarInput:focus {
+  outline: none;
+  border-color: #1E88E5;
+}
+
+.sugarInput::placeholder {
+  color: #999;
+}
+
+.sugarUnit {
+  color: #1E88E5;
+  font-weight: 600;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.sugarResult {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.sugarDetailContent {
+  text-align: left;
+  width: 100%;
+  color: #333;
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-y: auto;
+  overflow-x: auto;
+  max-height: 60vh;
+  padding-right: 0.5rem;
+  flex: 1;
+}
+
+.sugarSubtitle {
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.sugarSubtitle p {
+  margin: 0.3rem 0;
+  color: #1E88E5;
+  font-weight: 600;
+}
+
+.sugarSubtitle p:first-child {
+  font-size: 16px;
+}
+
+.sugarSubtitle p:last-child {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.sugarResultTitle {
+  font-weight: 700;
+  font-size: 18px;
+  color: #1E88E5;
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+.sugarSubtitle .sugarSubDetail {
+  font-size: 14px;
+  color: #424242;
+  font-weight: 500;
+}
+
+.sugarContent {
+  margin-top: 1rem;
+  color: #333;
+}
+
+.sugarContent ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  width: 100%;
+}
+
+.sugarContent ul li {
+  padding: 0.5rem 0.2rem;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 15px;
+  line-height: 1.6;
+}
+.sugarContent ul li:last-child {
+  border-bottom: none;
+}
+.sugarContent ul li::before {
+  content: '✓';
+  color: #1DE9B6;
+  font-weight: bold;
+  margin-right: 0.8rem;
+}
+
+.sugarContent .nestedList {
+  margin-top: 0.5rem;
+  margin-left: 1.5rem;
+}
+
+.sugarContent .nestedList li {
+  border: none;
+  padding: 0.2rem 0;
+}
+
+.sugarContent .nestedList li::before {
+  content: '•';
+  color: #1E88E5;
+}
+
+.sugarContent p {
+  margin: 0 0 1rem 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.sugarContent p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 480px) {
+  .modalContent {
+    font-size: 14px;
+    max-height: 65vh;
+  }
+  
+  .bmiModalContent,
+  .foodModalContent,
+  .insulinModalContent,
+  .sugarModalContent {
+    max-height: 65vh;
+  }
+  
+  .insulinDetailContent,
+  .sugarDetailContent {
+    max-height: 55vh;
+    font-size: 14px;
+  }
+  
+  .sugarInput {
+    font-size: 14px;
+    padding: 0.7rem 0.8rem;
+  }
+  
+  .sugarUnit {
+    font-size: 14px;
+  }
 } 

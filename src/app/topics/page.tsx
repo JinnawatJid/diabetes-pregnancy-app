@@ -247,9 +247,12 @@ export default function Topics() {
   const [showDownload, setShowDownload] = useState(false);
   const [foodModalPage, setFoodModalPage] = useState(0);
   const [activeInsulinSubTopic, setActiveInsulinSubTopic] = useState<string | null>(null);
+  const [sugarLevel, setSugarLevel] = useState<string>('');
+  const [sugarModalPage, setSugarModalPage] = useState<'input' | 'high' | 'low'>('input');
   const bmiTopicIndex = topics.findIndex(t => t.title === 'bmi. แปลผล');
   const foodTopicIndex = topics.findIndex(t => t.title === 'อาหาร');
   const insulinTopicIndex = topics.findIndex(t => t.title === 'หญิงตั้งครรภ์ที่ฉีดอินซูลิน');
+  const sugarTopicIndex = topics.findIndex(t => t.title === 'ค่าระดับน้ำตาล และวิธีการจัดการ');
   const activeFoodDetails = patientData?.bmiCategory ? foodDetails[patientData.bmiCategory as keyof typeof foodDetails] : null;
 
   // Download handler
@@ -315,6 +318,8 @@ export default function Topics() {
     setOpen(null);
     setFoodModalPage(0);
     setActiveInsulinSubTopic(null);
+    setSugarLevel('');
+    setSugarModalPage('input');
   };
 
   return (
@@ -488,6 +493,109 @@ export default function Topics() {
                   </>
                 )}
               </div>
+            ) : open === sugarTopicIndex ? (
+              <div className={styles.sugarModalContent}>
+                {sugarModalPage === 'input' ? (
+                  <>
+                    <h3 className={styles.modalTitle}>ระดับน้ำตาลในเลือด</h3>
+                    <div className={styles.sugarInputContainer}>
+                      <input
+                        type="number"
+                        value={sugarLevel}
+                        onChange={(e) => setSugarLevel(e.target.value)}
+                        placeholder="ค่าระดับน้ำตาลในเลือด"
+                        className={styles.sugarInput}
+                      />
+                      <span className={styles.sugarUnit}>mg/dL</span>
+                    </div>
+                    
+                    {sugarLevel && (
+                      <div className={styles.sugarResult}>
+                        {parseFloat(sugarLevel) < 105 ? (
+                          <div className={styles.sugarContent}>
+                            <p className={styles.sugarResultTitle}>เบาหวานขณะตั้งครรภ์ชนิด A1 (GDM A1)</p>
+                            <ul>
+                              <li>เป็นเบาหวานที่ตรวจพบขณะตั้งครรภ์ และ <b>สามารถควบคุมได้ด้วยการปรับเปลี่ยนอาหาร</b> และการออกกำลังกาย</li>
+                              <li><b>เป้าหมาย:</b>
+                                <ul className={styles.nestedList}>
+                                  <li>ระดับน้ำตาลก่อนอาหาร &lt; 105 mg/dL</li>
+                                  <li>ระดับน้ำตาลหลังอาหาร 2 ชม. &lt; 120 mg/dL</li>
+                                </ul>
+                              </li>
+                              <li>หากควบคุมได้ตามนี้ มักจะยัง <b>ไม่จำเป็นต้องใช้ยา</b></li>
+                            </ul>
+                          </div>
+                        ) : (
+                          <div className={styles.sugarContent}>
+                            <p className={styles.sugarResultTitle}>เบาหวานขณะตั้งครรภ์ชนิด A2 (GDM A2)</p>
+                             <ul>
+                              <li>เป็นเบาหวานขณะตั้งครรภ์ที่ <b>จำเป็นต้องใช้ยาหรืออินซูลิน</b> ร่วมกับการคุมอาหาร</li>
+                              <li><b>เกณฑ์พิจารณาใช้ยา:</b>
+                                <ul className={styles.nestedList}>
+                                  <li>ระดับน้ำตาลก่อนอาหาร ≥ 105 mg/dL</li>
+                                  <li>หรือ ระดับน้ำตาลหลังอาหาร 2 ชม. ≥ 120 mg/dL (แม้จะคุมอาหารแล้ว)</li>
+                                </ul>
+                              </li>
+                              <li>การใช้ยาจะช่วยควบคุมระดับน้ำตาลให้อยู่ในเกณฑ์ที่ปลอดภัยต่อคุณแม่และทารก</li>
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    
+                    <div className={styles.modalButtonRow}>
+                      <button onClick={() => setSugarModalPage('low')} className={styles.button}>
+                        น้ำตาลต่ำ ทำยังไงดี?
+                      </button>
+                      <button onClick={() => setSugarModalPage('high')} className={styles.button}>
+                        น้ำตาลสูง ทำยังไงดี?
+                      </button>
+                    </div>
+                  </>
+                ) : sugarModalPage === 'high' ? (
+                  <div className={styles.sugarDetailContent}>
+                    <h3 className={styles.modalTitle}>ภาวะน้ำตาลในเลือดสูง</h3>
+                    <div className={styles.sugarSubtitle}>
+                      <p><b>Hyperglycemia</b></p>
+                      <p className={styles.sugarSubDetail}>คือภาวะที่ระดับน้ำตาลในเลือดสูงกว่าปกติ ซึ่งอาจเป็นอันตรายหากไม่ได้รับการควบคุม</p>
+                    </div>
+                    <div className={styles.sugarContent}>
+                        <p><b>อาการที่ควรสังเกต:</b></p>
+                        <ul>
+                            <li>กระหายน้ำบ่อย ดื่มน้ำเยอะ</li>
+                            <li>ปัสสาวะบ่อยและปริมาณมาก</li>
+                            <li>อ่อนเพลีย ไม่มีแรง</li>
+                            <li>ตาพร่ามัว</li>
+                        </ul>
+                        <p style={ { marginTop: '1rem' } }><b>สิ่งที่ควรทำ:</b></p>
+                        <p>หากมีอาการเหล่านี้ ควรปรึกษาแพทย์เพื่อปรับแผนการรักษา และควบคุมอาหารอย่างเคร่งครัด</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className={styles.sugarDetailContent}>
+                    <h3 className={styles.modalTitle}>ภาวะน้ำตาลในเลือดต่ำ</h3>
+                    <div className={styles.sugarSubtitle}>
+                      <p><b>Hypoglycemia</b></p>
+                      <p className={styles.sugarSubDetail}>คือภาวะที่ระดับน้ำตาลในเลือดต่ำกว่าปกติ ซึ่งอาจเป็นอันตรายเฉียบพลันได้</p>
+                    </div>
+                    <div className={styles.sugarContent}>
+                      <p><b>อาการที่ควรสังเกต:</b></p>
+                      <ul>
+                        <li>ใจสั่น มือสั่น</li>
+                        <li>เหงื่อออกมากผิดปกติ</li>
+                        <li>หน้ามืด เวียนศีรษะ</li>
+                        <li>รู้สึกหิวทันที</li>
+                        <li>วิตกกังวล กระสับกระส่าย</li>
+                      </ul>
+                      <p style={ { marginTop: '1rem' } }><b>สิ่งที่ควรทำ:</b></p>
+                      <ul>
+                        <li><b>หากรู้สึกตัวดี:</b> ให้รีบดื่มน้ำหวาน, น้ำผลไม้ (ประมาณ ½ แก้ว) หรืออมลูกอม เพื่อเพิ่มระดับน้ำตาลอย่างรวดเร็ว</li>
+                        <li><b>หากอาการรุนแรงหรือไม่ดีขึ้น:</b> ควรรีบไปพบแพทย์ทันที</li>
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </div>
             ) : (
               <>
                 <h3 className={styles.modalTitle}>{topics[open].title}</h3>
@@ -503,6 +611,11 @@ export default function Topics() {
               ) : null}
               {open === insulinTopicIndex && activeInsulinSubTopic ? (
                 <button onClick={() => setActiveInsulinSubTopic(null)} className={styles.button}>
+                  กลับสู่เมนู
+                </button>
+              ) : null}
+              {open === sugarTopicIndex && sugarModalPage !== 'input' ? (
+                <button onClick={() => setSugarModalPage('input')} className={styles.button}>
                   กลับสู่เมนู
                 </button>
               ) : null}
