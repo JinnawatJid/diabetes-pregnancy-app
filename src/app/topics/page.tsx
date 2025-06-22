@@ -8,6 +8,7 @@ import * as XLSX from "xlsx";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
+import Link from 'next/link';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -163,7 +164,7 @@ const topics = [
   {
     title: "หญิงตั้งครรภ์ที่ฉีดอินซูลิน",
     icon: "/Insuline.png",
-    details: `ใช้อินซูลินตามคำแนะนำของแพทย์\nควรฉีดในเวลาที่กำหนด\nผลข้างเคียงที่อาจพบ: น้ำตาลต่ำ, อาการแพ้บริเวณฉีด`
+    details: `This will be handled by a custom modal.` // Placeholder details
   },
   {
     title: "ออกกำลังกาย",
@@ -177,14 +178,78 @@ const topics = [
   },
 ];
 
+const insulinSubTopics = [
+  { title: "อินซูลิน คือ อะไร ?" },
+  { title: "วิธีการฉีดอินซูลิน" },
+  { title: "ผลข้างเคียงของอินซูลิน" },
+  { title: "ประโยชน์ของอินซูลิน" },
+];
+
+const insulinContent = {
+  "อินซูลิน คือ อะไร ?": {
+    title: "อินซูลินคืออะไร ?",
+    content: [
+      "อินซูลินเป็นฮอร์โมนที่ช่วยลดระดับน้ำตาลในเลือด โดยทำหน้าที่พาน้ำตาลจากเลือดเข้าสู่เซลล์เพื่อใช้เป็นพลังงาน",
+      "ในหญิงตั้งครรภ์บางคน ร่างกายจะตอบสนองต่ออินซูลินได้น้อยลง ทำให้ระดับน้ำตาลในเลือดสูงขึ้น จึงจำเป็นต้อง ฉีดอินซูลิน เพื่อควบคุมระดับน้ำตาลให้ปลอดภัยต่อลูกในครรภ์",
+    ],
+    image: "/insulin.jpg",
+  },
+  "วิธีการฉีดอินซูลิน": {
+    title: "วิธีการฉีดอินซูลิน",
+    content: [
+      "การฉีด 💉",
+      "1. ล้างมือให้สะอาด",
+      "2. เตรียมอุปกรณ์: ปากกาอินซูลิน (insulin pen) / ขวดอินซูลินและเข็มฉีดยา",
+      "3. เลือกตำแหน่งฉีด: ท้องส่วนด้านข้าง (หลีกเลี่ยงรอบสะดือ 2 นิ้ว), ต้นแขนด้านหลัง, ต้นขาด้านนอก",
+      "4. ฉีดใต้ผิวหนัง (Subcutaneous): จับเนื้อขึ้นเล็กน้อย แทงเข็มตรง ๆ หรือเอียง 45 องศา (ขึ้นอยู่กับขนาดไขมัน) กดยาให้หมด พักไว้ 5-10 วินาที แล้วดึงเข็มออก",
+      "💡 เคล็ดลับ",
+      "- สลับจุดฉีด ทุกครั้งเพื่อป้องกันผิวแข็งเป็นก้อน",
+      "- ห้ามฉีดบริเวณที่เป็นแผล บวม แดง หรือมีรอยช้ำ",
+      "การติดตาม",
+      "- เจาะปลายนิ้วตรวจน้ำตาลวันละ 4 ครั้ง: ตอนเช้า (FBS) และหลังอาหาร 3 มื้อ",
+    ],
+    image: "/insulin2.jpg",
+  },
+  "ผลข้างเคียงของอินซูลิน": {
+    title: "ผลข้างเคียงของอินซูลิน",
+    content: [
+      "🔻 ผลข้างเคียงที่พบบ่อย:",
+      "- บวมเล็กน้อยตรงจุดฉีด",
+      "- ผิวหนังแข็ง/เป็นก้อน ถ้าฉีดซ้ำจุดเดิมบ่อยเกินไป",
+      "- น้ำตาลในเลือดต่ำ (Hypoglycemia)",
+      "     อาการ: มือสั่น หน้ามืด หิว เหงื่อออก ใจสั่น",
+      " ➤ แก้ไข: ดื่มน้ำหวาน/น้ำผลไม้ ½ แก้ว หรือ อมลูกอมหวาน 3-4 เม็ด",
+      "",
+      "🔺 อาการที่ควรรีบพบแพทย์:",
+      "- ผื่นคัน บวม แดง ลมหายใจหอบ",
+      "- อาจแพ้อินซูลิน (พบได้น้อยมาก)",
+    ],
+    image: "/insulin3.jpg",
+  },
+  "ประโยชน์ของอินซูลิน": {
+    title: "ประโยชน์ของอินซูลิน",
+    content: [
+      "ผลดีของการควบคุมระดับน้ำตาลที่ดี",
+      "- ลดความเสี่ยงลูกตัวโตเกินไป",
+      "- ลดการคลอดยาก ลดอัตราการผ่าคลอด",
+      "- ลดโอกาสที่ทารกมีน้ำตาลต่ำหรือหายใจลำบากหลังคลอด",
+      "- ลดโอกาสมารดาเป็นเบาหวานถาวรในอนาคต",
+    ],
+    image: "/insulin4.jpeg",
+  },
+  // Other sub-topics will be added here
+};
+
 export default function Topics() {
   const [open, setOpen] = useState<number | null>(null);
   const { patientData } = usePatient();
   const [downloading, setDownloading] = useState(false);
   const [showDownload, setShowDownload] = useState(false);
-  const [foodModalPage, setFoodModalPage] = useState(0); // For food modal pagination
+  const [foodModalPage, setFoodModalPage] = useState(0);
+  const [activeInsulinSubTopic, setActiveInsulinSubTopic] = useState<string | null>(null);
   const bmiTopicIndex = topics.findIndex(t => t.title === 'bmi. แปลผล');
   const foodTopicIndex = topics.findIndex(t => t.title === 'อาหาร');
+  const insulinTopicIndex = topics.findIndex(t => t.title === 'หญิงตั้งครรภ์ที่ฉีดอินซูลิน');
   const activeFoodDetails = patientData?.bmiCategory ? foodDetails[patientData.bmiCategory as keyof typeof foodDetails] : null;
 
   // Download handler
@@ -248,7 +313,8 @@ export default function Topics() {
 
   const handleModalClose = () => {
     setOpen(null);
-    setFoodModalPage(0); // Reset food modal page on close
+    setFoodModalPage(0);
+    setActiveInsulinSubTopic(null);
   };
 
   return (
@@ -389,6 +455,39 @@ export default function Topics() {
                   <div className={styles.bmiPlaceholder}>กรุณากรอกข้อมูลเพื่อดูคำแนะนำด้านอาหาร</div>
                 )}
               </div>
+            ) : open === insulinTopicIndex ? (
+              <div className={styles.insulinModalContent}>
+                {activeInsulinSubTopic ? (
+                  // Detailed View
+                  <div className={styles.insulinDetailContent}>
+                    <h3 className={styles.modalTitle}>{insulinContent[activeInsulinSubTopic as keyof typeof insulinContent].title}</h3>
+                    {insulinContent[activeInsulinSubTopic as keyof typeof insulinContent].content.map((text, i) => <p key={i}>{text}</p>)}
+                    <Image 
+                      src={insulinContent[activeInsulinSubTopic as keyof typeof insulinContent].image}
+                      alt={insulinContent[activeInsulinSubTopic as keyof typeof insulinContent].title}
+                      width={300}
+                      height={200}
+                      className={styles.insulinDetailImage}
+                    />
+                  </div>
+                ) : (
+                  // Sub-topic Selection View
+                  <>
+                    <h3 className={styles.modalTitle}>อินซูลิน</h3>
+                    <div className={styles.insulinSubTopicGrid}>
+                      {insulinSubTopics.map((subTopic) => (
+                        <button 
+                          key={subTopic.title} 
+                          className={styles.insulinSubTopicCard}
+                          onClick={() => setActiveInsulinSubTopic(subTopic.title)}
+                        >
+                          {subTopic.title}
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
             ) : (
               <>
                 <h3 className={styles.modalTitle}>{topics[open].title}</h3>
@@ -397,13 +496,18 @@ export default function Topics() {
             )}
 
             <div className={styles.modalButtonRow}>
-              {open === foodTopicIndex && activeFoodDetails && foodModalPage < activeFoodDetails.pages.length - 1 && (
+              {open === foodTopicIndex && activeFoodDetails && foodModalPage < activeFoodDetails.pages.length - 1 ? (
                 <button onClick={() => setFoodModalPage(p => p + 1)} className={styles.button}>
                   ถัดไป
                 </button>
-              )}
+              ) : null}
+              {open === insulinTopicIndex && activeInsulinSubTopic ? (
+                <button onClick={() => setActiveInsulinSubTopic(null)} className={styles.button}>
+                  กลับสู่เมนู
+                </button>
+              ) : null}
               <button onClick={handleModalClose} className={styles.button}>
-                ปิด
+                กลับสู่หน้าหลัก
               </button>
             </div>
           </div>
