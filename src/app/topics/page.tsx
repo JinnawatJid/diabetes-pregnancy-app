@@ -850,13 +850,6 @@ export default function Topics() {
                     กลับสู่หน้าหลัก
                 </button>
               )}
-
-              {/* Special layout for food modal buttons */}
-              {open === foodTopicIndex && (
-                <button onClick={handleModalClose} className={styles.button}>
-                  กลับสู่หน้าหลัก
-                </button>
-              )}
             </div>
           </div>
         </div>
