@@ -676,7 +676,7 @@ export default function Topics() {
                     <h3 className={styles.modalTitle}>ภาวะน้ำตาลในเลือดสูง</h3>
                     <div className={styles.sugarSubtitle}>
                       <p><b>Hyperglycemia</b></p>
-                      <p className={styles.sugarSubDetail}>คือภาวะที่ระดับน้ำตาลในเลือดสูงกว่า 100 mg/dL <br />ซึ่งมีอาการผิดปกติดังนี้</p>
+                      <p className={styles.sugarSubDetail}>คือภาวะที่ระดับน้ำตาลในเลือดสูงกว่า 100 mg/dL ซึ่งมีอาการผิดปกติดังนี้</p>
                     </div>
                     <div className={styles.sugarContent}>
                         <p><b>อาการที่ควรสังเกต:</b></p>
@@ -695,7 +695,7 @@ export default function Topics() {
                     <h3 className={styles.modalTitle}>ภาวะน้ำตาลในเลือดต่ำ</h3>
                     <div className={styles.sugarSubtitle}>
                       <p><b>Hypoglycemia</b></p>
-                      <p className={styles.sugarSubDetail}>คือภาวะที่ระดับน้ำตาลในเลือดต่ำกว่า 70 mg/dL<br />ซึ่งมีอาการผิดปกติดังนี้</p>
+                      <p className={styles.sugarSubDetail}>คือภาวะที่ระดับน้ำตาลในเลือดต่ำกว่า 70 mg/dL ซึ่งมีอาการผิดปกติดังนี้</p>
                     </div>
                     <div className={styles.sugarContent}>
                       <p><b>อาการที่ควรสังเกต:</b></p>
