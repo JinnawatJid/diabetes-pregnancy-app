@@ -405,6 +405,22 @@
   background: #a8a8a8;
 }
 
+/* Custom scrollbar for sugar modal */
+.sugarModalContent::-webkit-scrollbar {
+  width: 6px;
+}
+.sugarModalContent::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+.sugarModalContent::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+.sugarModalContent::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
 @media (max-width: 480px) {
   .modalContent {
     font-size: 14px;

@@ -179,203 +179,142 @@ const topics = [
 ];
 
 const insulinSubTopics = [
-  { title: "อินซูลินคืออะไร" },
-  { title: "วิธีการฉีดอินซูลิน" },
-  { title: "ผลข้างเคียงของอินซูลิน" },
+  { title: "ข้อควรระวังในการฉีดอินซูลิน" },
+  { title: "ตำแหน่งการฉีดอินซูลิน" },
+  { title: "วีดีโอ" },
 ];
 
 const insulinContent = {
-  "อินซูลินคืออะไร": {
-    title: "อินซูลินคืออะไร",
+  "ข้อควรระวังในการฉีดอินซูลิน": {
+    title: "ข้อควรระวังในการฉีดอินซูลิน",
     content: [
-      "<b>อินซูลินคือฮอร์โมนที่สำคัญ</b>",
-      "อินซูลินเป็นฮอร์โมนที่ผลิตจากตับอ่อน ทำหน้าที่ช่วยให้ร่างกายนำน้ำตาลจากเลือดเข้าสู่เซลล์เพื่อใช้เป็นพลังงาน",
-      "",
-      "<b>ทำไมต้องใช้อินซูลินในเบาหวานขณะตั้งครรภ์</b>",
-      "• เมื่อตั้งครรภ์ ร่างกายต้องการอินซูลินมากขึ้น",
-      "• หากร่างกายไม่สามารถผลิตอินซูลินได้เพียงพอ จะทำให้ระดับน้ำตาลในเลือดสูง",
-      "• การใช้อินซูลินช่วยควบคุมระดับน้ำตาลให้อยู่ในเกณฑ์ที่ปลอดภัย",
-      "",
-      "<b>ประโยชน์ของการใช้อินซูลิน</b>",
-      "• ช่วยควบคุมระดับน้ำตาลในเลือดให้อยู่ในเกณฑ์ปกติ",
-      "• ลดความเสี่ยงต่อภาวะแทรกซ้อนต่างๆ",
-      "• ช่วยให้ทารกในครรภ์เจริญเติบโตได้ตามปกติ",
-      "• ลดความเสี่ยงต่อการคลอดก่อนกำหนด",
+      '<b>ข้อควรระวัง</b>',
+      '<ul style="margin: 0 0 1rem 1.5rem; padding: 0; text-align: left;">',
+      '<li>ห้ามเขย่าขวดยา เพราะจะทำให้ยาเกิดฟองและทำให้ได้ปริมาณยาไม่ครบตามจำนวน</li>',
+      '<li>ห้ามฉีดซ้ำที่เดิมมากกว่า 1 ครั้งในระยะเวลา 1-2 เดือน เนื่องจากอาจทำให้บริเวณที่ฉีดเกิดเป็นก้อนไตแข็งได้</li>',
+      '<li>ห้ามนวดบริเวณที่ฉีด เพราะอาจทำให้ยาดุดซึมเร็วเกินไปจนเกิดภาวะน้ำตาลในเลือดต่ำ</li>',
+      '<li>ก่อนทำการฉีด ให้ตรวจสอบอีกก่อนว่าเป็นอินซูลินที่ใช้อยู่เป็นประจำหรือไม่</li>',
+      '</ul>'
     ],
     image: "/insulin.jpg",
   },
-  "วิธีการฉีดอินซูลิน": {
-    title: "วิธีการฉีดอินซูลิน",
+  "ตำแหน่งการฉีดอินซูลิน": {
+    title: "ตำแหน่งการฉีดอินซูลิน",
     content: [
-      "<b>ขั้นตอนการฉีดอินซูลิน</b>",
-      "1. ล้างมือให้สะอาด",
-      "2. เตรียมอุปกรณ์การฉีด",
-      "3. เลือกตำแหน่งที่เหมาะสม",
-      "4. ทำความสะอาดผิวหนัง",
-      "5. ฉีดอินซูลินตามที่แพทย์แนะนำ",
-      "",
-      "<b>ตำแหน่งที่แนะนำในการฉีด</b>",
-      "• หน้าท้อง (ห่างจากสะดือ 2 นิ้ว)",
-      "• ต้นแขนด้านนอก",
-      "• ต้นขาด้านนอก",
-      "• ก้น",
-      "",
-      "<b>ข้อควรระวัง</b>",
-      "• เปลี่ยนตำแหน่งการฉีดทุกครั้ง",
-      "• ไม่ฉีดในบริเวณที่มีรอยแผลหรือการอักเสบ",
-      "• เก็บอินซูลินในตู้เย็น",
-      "• ตรวจสอบวันหมดอายุก่อนใช้",
+      `<b>ขั้นตอนการฉีดอินซูลิน</b>`,
+      `1. ล้างมือให้สะอาด`,
+      `2. เตรียมอุปกรณ์การฉีด`,
+      `3. เลือกตำแหน่งที่เหมาะสม`,
+      `4. ทำความสะอาดผิวหนัง`,
+      `5. ฉีดอินซูลินตามที่แพทย์แนะนำ`,
+      ``,
+      `<b>ตำแหน่งที่แนะนำในการฉีด</b>`,
+      `<ul style="margin: 0 0 1rem 1.5rem; padding: 0; text-align: left;">`,
+      `<li>หน้าท้อง (ห่างจากสะดือ 2 นิ้ว)</li>`,
+      `<li>ต้นแขนด้านนอก</li>`,
+      `<li>ต้นขาด้านนอก</li>`,
+      `<li>ก้น</li>`,
+      `</ul>`,
+      `<div style="width:100%;text-align:center;margin:1rem 0;"><img src="/Insulin_Injection.JPG" alt="ตำแหน่งการฉีดอินซูลิน" style="max-width:300px;width:100%;border-radius:16px;box-shadow:0 2px 8px rgba(30,136,229,0.08);" /></div>`,
+      `<b>ข้อควรระวัง</b>`,
+      `<ul style="margin: 0 0 1rem 1.5rem; padding: 0; text-align: left;">`,
+      `<li>เปลี่ยนตำแหน่งการฉีดทุกครั้ง</li>`,
+      `<li>ไม่ฉีดในบริเวณที่มีรอยแผลหรือการอักเสบ</li>`,
+      `<li>เก็บอินซูลินในตู้เย็น</li>`,
+      `<li>ตรวจสอบวันหมดอายุก่อนใช้</li>`,
+      `</ul>`
     ],
     image: "/insulin2.jpg",
   },
-  "ผลข้างเคียงของอินซูลิน": {
-    title: "ผลข้างเคียงของอินซูลิน",
+  "วีดีโอ": {
+    title: "วีดีโอ",
     content: [
-      "<b>ผลข้างเคียงที่อาจเกิดขึ้น</b>",
-      "<b>ภาวะน้ำตาลในเลือดต่ำ (Hypoglycemia)</b>",
-      "• อาการ: เหงื่อออก ใจสั่น หิว อ่อนเพลีย",
-      "• การแก้ไข: รับประทานน้ำตาลหรือน้ำผลไม้",
-      "",
-      "<b>ปฏิกิริยาที่บริเวณฉีด</b>",
-      "• อาการ: แดง บวม คัน",
-      "• การแก้ไข: เปลี่ยนตำแหน่งการฉีด",
-      "",
-      "<b>น้ำหนักขึ้น</b>",
-      "• อาจเกิดจากการที่อินซูลินช่วยให้ร่างกายเก็บไขมัน",
-      "• ควรควบคุมอาหารและออกกำลังกาย",
-      "",
-      "<b>เมื่อไหร่ควรติดต่อแพทย์</b>",
-      "• มีอาการน้ำตาลต่ำบ่อย",
-      "• มีปฏิกิริยารุนแรงที่บริเวณฉีด",
-      "• ระดับน้ำตาลไม่ลดลงหลังฉีดอินซูลิน",
-    ],
-    image: "/insulin3.jpg",
+      '<div style="margin-bottom:2rem;">'
+        + '<div style="font-weight:600;color:#1E88E5;font-size:17px;margin-bottom:0.5rem;">แบบเข็ม</div>'
+        + '<video controls width="100%" style="max-width:400px;border-radius:16px;box-shadow:0 2px 8px rgba(30,136,229,0.08);margin-bottom:1.5rem;">'
+        + '<source src="/Needle_Type.mp4" type="video/mp4" />'
+        + 'ขออภัย ไม่สามารถเล่นวิดีโอนี้ได้'
+        + '</video>'
+        + '<div style="font-weight:600;color:#1E88E5;font-size:17px;margin-bottom:0.5rem;">แบบปากกา</div>'
+        + '<video controls width="100%" style="max-width:400px;border-radius:16px;box-shadow:0 2px 8px rgba(30,136,229,0.08);">'
+        + '<source src="/Pen_Type.mp4" type="video/mp4" />'
+        + 'ขออภัย ไม่สามารถเล่นวิดีโอนี้ได้'
+        + '</video>'
+      + '</div>'
+    ]
   },
 };
 
+const yogaPoses = [
+  {
+    image: "/Extended_triangle_pose.JPG",
+    title: "ท่าที่ 1.Utthita Trikonasana (Extended triangle pose)",
+    description: "ช่วยเสริมสร้างกล้ามเนื้ออุ้งเชิงกราน ต้นขา และน่อง เพิ่มความยืดหยุ่นของกระดูกสันหลังและช่วยปรับปรุงการย่อยอาหาร"
+  },
+  {
+    image: "/Warrior_pose.JPG",
+    title: "ท่าที่ 2.Virbhadrasan (Warrior pose)",
+    description: "ช่วยยืดกล้ามเนื้อบริเวณขาหนีบ เสริมสร้างความแข็งแรงให้กล้ามเนื้อร่างกายและหลัง กระชับกล้ามเนื้อส่วนล่าง เพิ่มความแข็งแรงและความยืดหยุ่น และบรรเทาอาการปวดหลัง"
+  },
+  {
+    image: "/Tree_pose.JPG",
+    title: "ท่าที่ 3.Vrikshasan (Tree pose)",
+    description: "ช่วยยืดกล้ามเนื้อขา หลัง และแขน ช่วยให้ร่างกายแข็งแรงและเพิ่มสมาธิ"
+  },
+  {
+    image: "/Thunderbolt_pose.JPG",
+    title: "ท่าที่ 4.Vajrasan (Thunderbolt pose)",
+    description: "ช่วยเพิ่มประสิทธิภาพระบบย่อยอาหาร ปรับเปลี่ยนการไหลเวียนโลหิตและแรงกระตุ้นของระบบประสาทในบริเวณอุ้งเชิงกราน บรรเทาอาการเจ็บป่วยในกระเพาะอาหาร เช่น ภาวะกรดเกิน และเป็นอาสนะเดียวที่สามารถฝึกได้หลังรับประทานอาหารได้"
+  },
+  {
+    image: "/Cat_stretch_pose.JPG",
+    title: "ท่าที่ 5.Marjariasan (Cat stretch pose)",
+    description: "อาสนะนี้ช่วยเพิ่มความยืดหยุ่นของกล้ามเนื้อคอ กระดูกสันหลัง และไหล่ ซึ่งจำเป็นต่อการออกแรงขณะคลอดบุตร และลดอาการปวดหลัง"
+  },
+];
+
 const exerciseSubTopics = [
-  { title: "ประโยชน์การออกกำลังกาย" },
-  { title: "ประเภทการออกกำลังกาย" },
-  { title: "ข้อพึงระวังก่อนการออกกำลังกาย" },
+  { title: "การเดิน" },
+  { title: "โยคะ" },
+  { title: "การว่ายน้ำ" },
 ];
 
 const exerciseContent = {
-  "ประโยชน์การออกกำลังกาย": {
-    title: "ประโยชน์การออกกำลังกาย",
+  "การเดิน": {
+    title: "การเดิน",
     content: [
-      "<b>ควบคุมระดับน้ำตาลในเลือด</b>",
-      "การออกกำลังกายช่วยให้ร่างกายใช้ฮอร์โมนอินซูลินได้ดีขึ้น ทำให้ระดับน้ำตาลในเลือดลดลง",
-      "",
-      "<b>ลดความเสี่ยงของภาวะแทรกซ้อน</b>",
-      "การออกกำลังกายอย่างสม่ำเสมอสามารถลดความเสี่ยงของ:",
-      "• เบาหวานขณะตั้งครรภ์",
-      "• ภาวะครรภ์เป็นพิษ", 
-      "• น้ำหนักขึ้นมากเกินไป",
-      "",
-      "<b>ช่วยให้สุขภาพจิตดีขึ้น</b>",
-      "การออกกำลังกายสามารถช่วยลดความเครียดและความวิตกกังวลที่อาจเกิดขึ้นระหว่างตั้งครรภ์ได้",
-      "",
-      "<b>ช่วยให้ร่างกายแข็งแรง</b>",
-      "การออกกำลังกายช่วยเพิ่มความแข็งแรงของกล้ามเนื้อ และช่วยให้ร่างกายสามารถรับน้ำหนักที่เพิ่มขึ้นขณะตั้งครรภ์ได้",
-      "",
-      "<b>ช่วยให้ระบบต่างๆ ทำงานได้ดีขึ้น</b>",
-      "การออกกำลังกายช่วยให้:",
-      "• ระบบไหลเวียนโลหิตดีขึ้น",
-      "• ระบบย่อยอาหารทำงานได้ดีขึ้น", 
-      "• การขับถ่ายเป็นปกติ",
-      "",
-      "<b>ช่วยควบคุมน้ำหนัก</b>",
-      "การออกกำลังกายช่วยเผาผลาญไขมันและช่วยควบคุมน้ำหนักให้อยู่ในเกณฑ์ที่เหมาะสมระหว่างตั้งครรภ์",
+      "สตรีตั้งครรภ์ควรเดินอย่างน้อย 3 วันต่อสัปดาห์ ระยะเวลาในการออกกําลังกายครั้งละ 30 นาที"
     ],
-    image: "/yoga1.jpg",
+    images: ["/Walk1.PNG", "/Walk2.PNG"]
   },
-  "ประเภทการออกกำลังกาย": {
-    title: "ประเภทการออกกำลังกาย",
+  "โยคะ": {
+    title: "โยคะ",
     content: [
-      "<b>หลักการสำคัญ:</b>",
-      "ควรทำเฉพาะกล้ามเนื้อส่วนบนของร่างกาย โดยให้มีผลกระทบต่อกล้ามเนื้อส่วนท้องน้อยที่สุด",
-      "",
-      "<b>การเดิน</b>",
-      "• เป็นกิจกรรมที่สามารถทำได้ง่ายและสะดวกทุกที่",
-      "• ช่วยเพิ่มการเผาผลาญน้ำตาลในเลือดและเพิ่มความไวต่ออินซูลิน",
-      "• ปลอดภัยสำหรับหญิงตั้งครรภ์ทุกคน",
-      "",
-      "<b>ว่ายน้ำ</b>",
-      "• เป็นกิจกรรมที่การลอยตัวช่วยลดแรงกระแทกต่อข้อต่อ",
-      "• ช่วยให้รู้สึกสบายตัวและผ่อนคลายกล้ามเนื้อ",
-      "• ไม่ต้องรับน้ำหนักของร่างกาย",
-      "",
-      "<b>โยคะ</b>",
-      "• ช่วยลดความเครียดและเพิ่มความยืดหยุ่นของร่างกาย",
-      "• มีโยคะสำหรับหญิงตั้งครรภ์โดยเฉพาะ",
-      "• ช่วยสอนเทคนิคการหายใจและการผ่อนคลาย",
+      "โดยระยะเวลาการเล่นโยคะต่อท่า โดยทั่วไปจะค้างค่าแรง 30 วินาทีถึง 1 วินาที และทำซ้ำ 3 -5 รอบ"
     ],
-    image: "/yoga2.png",
+    poses: yogaPoses
   },
-  "ข้อพึงระวังก่อนการออกกำลังกาย": {
-    title: "ข้อพึงระวังก่อนการออกกำลังกาย",
-    content: [
-      "<b>การเริ่มต้นออกกำลังกาย</b>",
-      "• ควรเริ่มออกกำลังกายครั้งละน้อย ๆ ก่อน แล้วค่อยเพิ่มขึ้นอย่างช้า ๆ",
-      "• ควรปรึกษาแพทย์ก่อนเริ่มออกกำลังกาย",
-      "",
-      "<b>ระดับความหนักของการออกกำลังกาย</b>",
-      "• ห้ามออกกำลังกายหนักเกินไป",
-      "• ขณะออกกำลังกายควรพูดคุยกับคนอื่นได้ โดยไม่เหนื่อยหอบ",
-      "• ไม่ควรออกกำลังกายจนถึงจุดเหนื่อยล้า",
-      "",
-      "<b>สภาพแวดล้อมที่ควรหลีกเลี่ยง</b>",
-      "• ห้ามออกกำลังกายในที่ร้อนอบอ้าวหรือชื้น",
-      "• ห้ามออกกำลังกายในที่ที่มีมลภาวะ",
-      "• ห้ามออกกำลังกายขณะมีไข้",
-      "",
-      "<b>การเคลื่อนไหวที่ควรหลีกเลี่ยง</b>",
-      "• ห้ามออกกำลังกายแบบมีการกระตุกรุนแรง",
-      "• ห้ามเปลี่ยนท่าอย่างรวดเร็ว",
-      "• ห้ามเคลื่อนไหวของข้อมากเกินไป",
-      "",
-      "<b>ระยะเวลาการออกกำลังกาย</b>",
-      "• ไม่ควรออกกำลังกายนานเกิน 30 นาที",
-      "• เพื่อลดโอกาสเกิดภาวะระดับน้ำตาลในเลือดต่ำ (Hypoglycemia)",
-      "• ลดโอกาสเกิดภาวะคีโตซิส (Ketosis)",
-      "• ลดโอกาสเกิดภาวะอุณหภูมิกายสูง (Hyperthermia)",
-      "",
-      "<b>ท่าพักผ่อนที่แนะนำ</b>",
-      "• ควรมีการพักการออกกำลังกายในท่านอนตะแคงซ้าย",
-      "• งอเข่าเล็กน้อย ให้เลือดไหลเวียนได้ดีขึ้น",
-      "",
-      "<b>ข้อห้ามสำหรับไตรมาสที่ 2-3</b>",
-      "• ภายหลังตั้งครรภ์ 4 เดือนไปแล้ว ไม่ควรออกกำลังกายในท่านอนหรือนอนหงายนาน ๆ",
-      "• เพราะอาจเกิดภาวะความดันโลหิตต่ำขณะนอนหงายจากการกดทับเส้นเลือด",
-      "• เลี่ยงการยืนนาน ๆ โดยเฉพาะในไตรมาสที่ 3",
-      "",
-      "<b>การเปลี่ยนท่า</b>",
-      "• ขณะเปลี่ยนท่าต้องค่อย ๆ เปลี่ยน",
-      "• เพื่อลดการเกิดภาวะความดันโลหิตต่ำขณะเปลี่ยนท่า",
-      "",
-      "<b>การรับประทานอาหาร</b>",
-      "• ห้ามรับประทานอาหารอย่างน้อยครึ่งชั่วโมงก่อนออกกำลังกาย",
-      "",
-      "<b>อาการที่ต้องหยุดออกกำลังกายทันที</b>",
-      "• ปวดต่าง ๆ",
-      "• เลือดออกทางช่องคลอด",
-      "• มดลูกหดรัดตัวผิดปกตินานเกิน 15 นาที หรือหดรัดตัวบ่อย",
-      "• มึนงง เวียนศีรษะ ตาพร่ามัว",
-      "• เป็นลม หายใจลำบาก หัวใจเต้นเร็วมาก",
-      "• คลื่นไส้อาเจียน",
-      "• มีน้ำคร่ำไหลออกมา",
-      "• ทารกดิ้นน้อย",
-      "• อาการบวมจากภาวะความดันโลหิตสูง",
-      "• ปวดน่อง และขาบวม",
-    ],
-    image: "/yoga3.jpg",
-  },
+  "การว่ายน้ำ": {
+    title: "การว่ายน้ำ",
+    activities: [
+      {
+        image: "/Swimming1.JPG",
+        title: "เดินช้าๆ ในนํ้า ยืนบิดตัวซ้ายขวา",
+        description: "การบิดตัวแบบนี้จะไม่เป็นอันตรายเพราะน้ำจะช่วยต้านแรงการบิดไว้ได้ ทำให้เป็นการบิดตัวที่ช้าและนุ่มนวลมากขึ้น"
+      },
+      {
+        image: "/Swimming2.JPG",
+        title: "ลอยตัวเหนือน้ำ",
+        description: "ช่วยให้แม่ท้องได้ลอยอึ้งๆ และสร้างสมาธิ มีความเย็นของน้ำช่วยให้จิตใจสงบ"
+      },
+    ]
+  }
 };
 
 const complicationsContent = [
   {
     title: "ความดันโลหิตสูงขณะตั้งครรภ์ (PIH / preeclampsia)",
-    description: "เป็นภาวะแทรกซ้อนที่อาจทำให้มารดามีอาการปวดศีรษะ ตาพร่า บวมมาก โปรตีนรั่วในปัสสาวะ และไตทำงานผิดปกติ หากรุนแรงอาจเกิดภาวะชัก (eclampsia) ตับผิดปกติ เกล็ดเลือดต่ำ หรือรกลอกตัวก่อนกำหนด ซึ่งเป็นอันตรายต่อชีวิตทั้งมารดาและทารก"
+    description: "เกิดจากรกได้รับเลือดไม่พอ ทําให้ปล่อยสาร sFlt-1 ทําให้หลอดเลือดหดตัว แข็งตัว ความดันสูงขึ้น มารดาจะมีอาการปวดหัว ตาพร่า จุกลิ้นปี่ ปัสสาวะมีโปรตีน ถ้ารุนแรงมากเสี่ยงชัก (eclampsia) ซึ่งอันตรายต่อชีวิตทั้งมารดาและทารก"
   },
   {
     title: "ครรภ์เป็นพิษ (Eclampsia)",
@@ -403,6 +342,18 @@ const complicationsContent = [
   }
 ];
 
+function hasActivities(obj: any): obj is { activities: { image: string; title: string; description: string; }[] } {
+  return obj && Array.isArray(obj.activities);
+}
+
+function hasContent(obj: any): obj is { content: string[] } {
+  return obj && Array.isArray(obj.content);
+}
+
+function hasImage(obj: any): obj is { image: string } {
+  return obj && typeof obj.image === 'string' && obj.image.length > 0;
+}
+
 export default function Topics() {
   const [open, setOpen] = useState<number | null>(null);
   const { patientData } = usePatient();
@@ -413,6 +364,7 @@ export default function Topics() {
   const [sugarLevel, setSugarLevel] = useState<string>('');
   const [sugarModalPage, setSugarModalPage] = useState<'input' | 'high' | 'low'>('input');
   const [activeExerciseSubTopic, setActiveExerciseSubTopic] = useState<string | null>(null);
+  const currentExerciseContent = activeExerciseSubTopic ? exerciseContent[activeExerciseSubTopic as keyof typeof exerciseContent] : null;
   const bmiTopicIndex = topics.findIndex(t => t.title === 'bmi. แปลผล');
   const foodTopicIndex = topics.findIndex(t => t.title === 'อาหาร');
   const insulinTopicIndex = topics.findIndex(t => t.title === 'หญิงตั้งครรภ์ที่ฉีดอินซูลิน');
@@ -420,6 +372,7 @@ export default function Topics() {
   const exerciseTopicIndex = topics.findIndex(t => t.title === 'ออกกำลังกาย');
   const complicationsTopicIndex = topics.findIndex(t => t.title === 'ภาวะแทรกซ้อน');
   const activeFoodDetails = patientData?.bmiCategory ? foodDetails[patientData.bmiCategory as keyof typeof foodDetails] : null;
+  const currentInsulinContent = activeInsulinSubTopic ? insulinContent[activeInsulinSubTopic as keyof typeof insulinContent] : null;
 
   // Download handler
   const handleDownload = async () => {
@@ -637,13 +590,15 @@ export default function Topics() {
                     {insulinContent[activeInsulinSubTopic as keyof typeof insulinContent].content.map((text, i) => 
                       <p key={i} dangerouslySetInnerHTML={{ __html: text }} />
                     )}
-                    <Image 
-                      src={insulinContent[activeInsulinSubTopic as keyof typeof insulinContent].image}
-                      alt={insulinContent[activeInsulinSubTopic as keyof typeof insulinContent].title}
-                      width={300}
-                      height={200}
-                      className={styles.insulinDetailImage}
-                    />
+                    {currentInsulinContent && hasImage(currentInsulinContent) && (
+                        <Image 
+                          src={currentInsulinContent.image}
+                          alt={currentInsulinContent.title}
+                          width={300}
+                          height={200}
+                          className={styles.insulinDetailImage}
+                        />
+                     )}
                   </div>
                 ) : (
                   // Sub-topic Selection View
@@ -669,19 +624,14 @@ export default function Topics() {
                   <>
                     <h3 className={styles.modalTitle}>ระดับน้ำตาลในเลือด</h3>
                     <div className={styles.sugarInputContainer}>
-                      <input
-                        type="number"
-                        value={sugarLevel}
-                        onChange={(e) => setSugarLevel(e.target.value)}
-                        placeholder="ค่าระดับน้ำตาลในเลือด"
-                        className={styles.sugarInput}
-                      />
+                      <span className={styles.sugarInput} style={{background:'#f8faff', border:'1px solid #e3f2fd', color:'#1E88E5', fontWeight:600}}>
+                        {patientData?.sugar_level !== undefined && patientData?.sugar_level !== null && patientData?.sugar_level !== '' ? patientData.sugar_level : '-'}
+                      </span>
                       <span className={styles.sugarUnit}>mg/dL</span>
                     </div>
-                    
-                    {sugarLevel && (
+                    {patientData?.sugar_level !== undefined && patientData?.sugar_level !== null && patientData?.sugar_level !== '' && (
                       <div className={styles.sugarResult}>
-                        {parseFloat(sugarLevel) < 105 ? (
+                        {parseFloat(String(patientData.sugar_level)) < 105 ? (
                           <div className={styles.sugarContent}>
                             <p className={styles.sugarResultTitle}>เบาหวานขณะตั้งครรภ์ชนิด A1 (GDM A1)</p>
                             <ul>
@@ -712,7 +662,6 @@ export default function Topics() {
                         )}
                       </div>
                     )}
-                    
                     <div className={styles.modalButtonRow}>
                       <button onClick={() => setSugarModalPage('low')} className={styles.button}>
                         น้ำตาลต่ำ ทำยังไงดี?
@@ -727,7 +676,7 @@ export default function Topics() {
                     <h3 className={styles.modalTitle}>ภาวะน้ำตาลในเลือดสูง</h3>
                     <div className={styles.sugarSubtitle}>
                       <p><b>Hyperglycemia</b></p>
-                      <p className={styles.sugarSubDetail}>คือภาวะที่ระดับน้ำตาลในเลือดสูงกว่าปกติ ซึ่งอาจเป็นอันตรายหากไม่ได้รับการควบคุม</p>
+                      <p className={styles.sugarSubDetail}>คือภาวะที่ระดับน้ำตาลในเลือดสูงกว่า 100 mg/dL <br />ซึ่งมีอาการผิดปกติดังนี้</p>
                     </div>
                     <div className={styles.sugarContent}>
                         <p><b>อาการที่ควรสังเกต:</b></p>
@@ -746,7 +695,7 @@ export default function Topics() {
                     <h3 className={styles.modalTitle}>ภาวะน้ำตาลในเลือดต่ำ</h3>
                     <div className={styles.sugarSubtitle}>
                       <p><b>Hypoglycemia</b></p>
-                      <p className={styles.sugarSubDetail}>คือภาวะที่ระดับน้ำตาลในเลือดต่ำกว่าปกติ ซึ่งอาจเป็นอันตรายเฉียบพลันได้</p>
+                      <p className={styles.sugarSubDetail}>คือภาวะที่ระดับน้ำตาลในเลือดต่ำกว่า 70 mg/dL<br />ซึ่งมีอาการผิดปกติดังนี้</p>
                     </div>
                     <div className={styles.sugarContent}>
                       <p><b>อาการที่ควรสังเกต:</b></p>
@@ -772,16 +721,45 @@ export default function Topics() {
                   // Detailed View
                   <div className={styles.exerciseDetailContent}>
                     <h3 className={styles.modalTitle}>{exerciseContent[activeExerciseSubTopic as keyof typeof exerciseContent].title}</h3>
-                    {exerciseContent[activeExerciseSubTopic as keyof typeof exerciseContent].content.map((text, i) => 
+                    {currentExerciseContent && hasContent(currentExerciseContent) && currentExerciseContent.content.map((text: string, i: number) => (
                       <p key={i} dangerouslySetInnerHTML={{ __html: text }} />
+                    ))}
+                    {activeExerciseSubTopic === 'การเดิน' ? (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center', width: '100%' }}>
+                        <Image src="/Walk1.PNG" alt="การเดิน 1" width={300} height={200} className={styles.exerciseDetailImage} />
+                        <Image src="/Walk2.PNG" alt="การเดิน 2" width={300} height={200} className={styles.exerciseDetailImage} />
+                      </div>
+                    ) : activeExerciseSubTopic === 'โยคะ' ? (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center', width: '100%' }}>
+                        {yogaPoses.map((pose, idx) => (
+                          <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                            <Image src={pose.image} alt={pose.title} width={300} height={200} className={styles.exerciseDetailImage} />
+                            <div style={{ marginTop: '0.5rem', fontWeight: 600, color: '#1E88E5', textAlign: 'center' }}>{pose.title}</div>
+                            <div style={{ color: '#37474F', textAlign: 'center', fontSize: '15px', marginTop: '0.2rem' }}>{pose.description}</div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : activeExerciseSubTopic === 'การว่ายน้ำ' && currentExerciseContent && hasActivities(currentExerciseContent) ? (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', alignItems: 'center', width: '100%' }}>
+                        {currentExerciseContent.activities.map((activity: { image: string; title: string; description: string; }, idx: number) => (
+                          <div key={idx} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+                            <Image src={activity.image} alt={activity.title} width={300} height={200} className={styles.exerciseDetailImage} />
+                            <div style={{ marginTop: '0.5rem', fontWeight: 600, color: '#1E88E5', textAlign: 'center' }}>{activity.title}</div>
+                            <div style={{ color: '#37474F', textAlign: 'center', fontSize: '15px', marginTop: '0.2rem' }}>{activity.description}</div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      'image' in exerciseContent[activeExerciseSubTopic as keyof typeof exerciseContent] && (
+                        <Image 
+                          src={(exerciseContent[activeExerciseSubTopic as keyof typeof exerciseContent] as any).image}
+                          alt={exerciseContent[activeExerciseSubTopic as keyof typeof exerciseContent].title}
+                          width={300}
+                          height={200}
+                          className={styles.exerciseDetailImage}
+                        />
+                      )
                     )}
-                    <Image 
-                      src={exerciseContent[activeExerciseSubTopic as keyof typeof exerciseContent].image}
-                      alt={exerciseContent[activeExerciseSubTopic as keyof typeof exerciseContent].title}
-                      width={300}
-                      height={200}
-                      className={styles.exerciseDetailImage}
-                    />
                   </div>
                 ) : (
                   // Sub-topic Selection View
@@ -848,7 +826,7 @@ export default function Topics() {
               {open !== complicationsTopicIndex && (
                  <button onClick={handleModalClose} className={styles.button}>
                     กลับสู่หน้าหลัก
-                </button>
+            </button>
               )}
             </div>
           </div>
