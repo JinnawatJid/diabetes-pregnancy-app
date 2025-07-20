@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { PieChart } from '@mui/x-charts/PieChart';
 import { usePatient } from "../context/PatientContext";
 import styles from './page.module.css';
 import { supabase } from "../../lib/supabase";
@@ -302,12 +303,60 @@ export default function Topics() {
   const [downloading, setDownloading] = useState(false);
   const [showDownload, setShowDownload] = useState(false);
   const [foodModalPage, setFoodModalPage] = useState(0);
+  const [selectedNutrient, setSelectedNutrient] = useState<string | null>(null);
   const [activeInsulinSubTopic, setActiveInsulinSubTopic] = useState<string>('');
   const [videoLoading, setVideoLoading] = useState<{ [key: string]: boolean }>({});
   const [videoError, setVideoError] = useState<{ [key: string]: boolean }>({});
   const [sugarLevel, setSugarLevel] = useState<string>('');
   const [sugarModalPage, setSugarModalPage] = useState<'input' | 'high' | 'low'>('input');
   const [activeExerciseSubTopic, setActiveExerciseSubTopic] = useState<string | null>(null);
+
+  const calculateDailyCalories = (bmi: number, weight: number) => {
+    let kcalPerKg = 30; // default
+    if (bmi < 18.5) kcalPerKg = 40;
+    else if (bmi >= 18.5 && bmi <= 24.9) kcalPerKg = 30;
+    else if (bmi >= 25 && bmi <= 29.9) kcalPerKg = 25;
+    else if (bmi >= 30) kcalPerKg = 12;
+    
+    return Math.round(kcalPerKg * weight);
+  };
+
+  const nutrientAdvice = {
+    fat: {
+      title: "ไขมัน (20%)",
+      image: "/FoodFat.jpg",
+      description: "ไขมันเป็นแหล่งพลังงานที่เข้มข้นที่สุดและช่วยในการดูดซึมวิตามินที่ละลายในไขมัน (วิตามิน A, D, E และ K) นอกจากนี้ ไขมันยังช่วยให้ร่างกายสร้างฮอร์โมนและเซลล์ต่าง ๆ การรับประทานไขมันในปริมาณที่พอเหมาะจึงเป็นสิ่งสำคัญ",
+      sources: "แหล่งไขมันที่ดี ได้แก่ น้ำมันมะกอก น้ำมันมะพร้าว และน้ำมันเมล็ดพืช ปลา เช่น ปลาแซลมอน ปลาทูน่า ถั่วและเมล็ดพืช เช่น อัลมอนด์ เมล็ดแฟลกซ์ อะโวคาโด",
+      advice: [
+        "พัฒนาการสมองและระบบประสาท: กรดไขมันโอเมก้า 3 และ DHA ที่พบในปลาทะเลและอาหารอื่น ๆ มีความสำคัญต่อการพัฒนาสมองและระบบประสาทของทารกในครรภ์",
+        "ลดความเสี่ยงของโรคหัวใจ: ไขมันดีช่วยลดระดับคอเลสเตอรอลที่ไม่ดีในร่างกาย ทำให้ลดความเสี่ยงของโรคหัวใจและหลอดเลือด",
+        "เป็นแหล่งพลังงาน: ไขมันเป็นแหล่งพลังงานสำคัญสำหรับร่างกาย ช่วยในการดูดซึมวิตามินที่ละลายในไขมัน และช่วยในการทำงานของระบบต่าง ๆ ในร่างกาย",
+        "ช่วยในการดูดซึมวิตามิน: ไขมันช่วยในการดูดซึมวิตามินที่ละลายในไขมัน เช่น วิตามินเอ, ดี, อี, และ เค"
+      ]
+    },
+    protein: {
+      title: "โปรตีน (40%)",
+      image: "/FoodProtein.jpeg",
+      description: "โปรตีน ซึ่งมีบทบาทสำคัญในการเสริมสร้างและซ่อมแซมเนื้อเยื่อในร่างกาย รวมถึงการสร้างกล้ามเนื้อและเอนไซม์ โปรตีนยังช่วยเสริมสร้างระบบภูมิคุ้มกันและเป็นแหล่งพลังงานที่สำคัญ",
+      sources: "แหล่งโปรตีนที่ดี ได้แก่ เนื้อสัตว์ เช่น เนื้อหมู เนื้อไก่ และเนื้อวัว เนื้อปลา ไข่ นมและผลิตภัณฑ์จากนม เช่น ชีสและโยเกิร์ต ถั่วเมล็ดแห้ง เช่น ถั่วเหลือง ถั่วลิสง และถั่วแดง",
+      advice: [
+        "สร้างและซ่อมแซมส่วนที่สึกหรอ: โปรตีนเป็นส่วนประกอบสำคัญในการสร้างและซ่อมแซมเซลล์และเนื้อเยื่อต่าง ๆ ในร่างกายของคุณแม่และทารก",
+        "เสริมสร้างพัฒนาการของทารก: โปรตีนช่วยในการเจริญเติบโตของทารกในครรภ์ โดยเฉพาะอย่างยิ่งการสร้างกล้ามเนื้อ กระดูก และสมอง",
+        "ช่วยสร้างภูมิคุ้มกัน: โปรตีนมีส่วนช่วยในการสร้างภูมิคุ้มกัน ทำให้ร่างกายแข็งแรงและสามารถต่อสู้กับการติดเชื้อได้",
+        "ช่วยควบคุมระดับน้ำตาลในเลือด: โปรตีนมีส่วนช่วยในการรักษาสมดุลของระดับน้ำตาลในเลือด ซึ่งมีความสำคัญสำหรับคุณแม่ที่อาจมีความเสี่ยงเป็นโรคเบาหวานขณะตั้งครรภ์"
+      ]
+    },
+    carbs: {
+      title: "คาร์โบไฮเดรต (40%)",
+      image: "/FoodCarbohydrates.jpeg",
+      description: "คาร์โบไฮเดรตเป็นแหล่งพลังงานหลักของร่างกาย โดยเฉพาะสำหรับการทำงานของสมองและระบบประสาท การรับประทานคาร์โบไฮเดรตในปริมาณที่เหมาะสมจะช่วยให้ร่างกายมีพลังงานเพียงพอสำหรับกิจกรรมในชีวิตประจำวัน",
+      sources: "แหล่งคาร์โบไฮเดรตที่ดี ได้แก่ ข้าวและผลิตภัณฑ์จากข้าว เช่น ข้าวสวย ข้าวกล้อง ข้าวเหนียว ขนมปัง และแป้งต่าง ๆ มันฝรั่งและมันเทศ ธัญพืชต่าง ๆ เช่น ข้าวโอ๊ตและควินัว",
+      advice: [
+        "คาร์โบไฮเดรตมีความสำคัญต่อหญิงตั้งครรภ์ เพราะเป็นแหล่งพลังงานหลักและมีผลต่อพัฒนาการของทารกในครรภ์",
+        "การเลือกทานคาร์โบไฮเดรตที่มีประโยชน์และในปริมาณที่เหมาะสมและมีความสำคัญ"
+      ]
+    }
+  };
 
   const getCalorieRequirement = (bmi: number) => {
     if (bmi < 18.5) return "ประมาณ 40 kcal/kg";
@@ -331,6 +380,18 @@ export default function Topics() {
     if (bmi >= 25 && bmi <= 29.9) return "(น้ำหนักสูงกว่าเกณฑ์)";
     if (bmi >= 30) return "(โรคอ้วน)";
     return "(น้ำหนักตามเกณฑ์)";
+  };
+
+  const hasImage = (obj: any): obj is { image: string } => {
+    return obj && typeof obj.image === 'string';
+  };
+
+  const hasDescription = (obj: any): obj is { description: string } => {
+    return obj && typeof obj.description === 'string';
+  };
+
+  const hasSources = (obj: any): obj is { sources: string } => {
+    return obj && typeof obj.sources === 'string';
   };
 
   const foodTopicIndex = topics.findIndex(t => t.title === 'อาหาร');
@@ -462,6 +523,16 @@ export default function Topics() {
     setVideoLoading(prev => ({ ...prev, [videoType]: true }));
     setVideoError(prev => ({ ...prev, [videoType]: false }));
   };
+  
+  const formatNumber = (num: number) => {
+    return num >= 1000 ? num.toLocaleString() : num.toString();
+  };
+  
+  const pieChartData = [
+    { id: 0, value: 20, label: 'ไขมัน 20%', color: '#1E88E5' },
+    { id: 1, value: 40, label: 'โปรตีน 40%', color: '#FF9800' },
+    { id: 2, value: 40, label: 'คาร์โบไฮเดรต 40%', color: '#4CAF50' }
+  ];
   
   return (
     <div className={styles.container}>
@@ -597,7 +668,7 @@ export default function Topics() {
                             <span className={styles.infoValue}>{patientData.height} ซม.</span>
                           </div>
                           <div className={styles.infoRow}>
-                            <span className={styles.infoLabel}>ดัชนีมวลกาย (BMI):</span>
+                            <span className={styles.infoLabel}>BMI:</span>
                             <span className={styles.infoValue}>
                               {patientData.bmi} {patientData.bmi ? getBMIDescription(parseFloat(patientData.bmi)) : ''}
                             </span>
@@ -626,25 +697,116 @@ export default function Topics() {
                     )}
                   </div>
                 ) : (
-                  activeFoodDetails ? (
-                    <>
-                      <h3 className={styles.modalTitle}>{activeFoodDetails.title}</h3>
-                      <div>
-                        {activeFoodDetails.content.map((item, index) => (
-                          <p key={index} className={styles.modalText}>
-                            {item}
-                          </p>
-                        ))}
+                  <div>
+                    <div className={styles.modalTitle}>
+                      <h2>อาหาร</h2>
+                      <button onClick={handleModalClose} className={styles.closeButton}>
+                        ×
+                      </button>
+                    </div>
+                    
+                    {patientData ? (
+                      <div className={styles.calorieCalculationContainer}>
+                        <div className={styles.calorieCalculation}>
+                          <h3>พลังงานที่คุณแม่ควรได้รับต่อวัน</h3>
+                          <div className={styles.calorieResult}>
+                            {patientData.bmi && patientData.weightBefore ? 
+                              `ประมาณ ${formatNumber(calculateDailyCalories(parseFloat(patientData.bmi), parseFloat(patientData.weightBefore)))} Kcal/day` : 
+                              'N/A'
+                            }
+                          </div>
+                        </div>
+                        
+                        <div className={styles.pieChartContainer}>
+                          <h4>สัดส่วนสารอาหาร</h4>
+                          <div className={styles.pieChart}>
+                            <PieChart
+                              series={[
+                                {
+                                  data: pieChartData,
+                                  arcLabel: 'label',
+                                  arcLabelMinAngle: 0,
+                                  arcLabelRadius: '60%',
+                                  highlightScope: { fade: 'global', highlight: 'item' },
+                                  faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+                                },
+                              ]}
+                              height={250}
+                              width={250}
+                              onItemClick={(event, item) => {
+                                if (item) {
+                                  const nutrientMap = ['fat', 'protein', 'carbs'];
+                                  const selectedNutrientKey = nutrientMap[item.dataIndex];
+                                  setSelectedNutrient(selectedNutrient === selectedNutrientKey ? null : selectedNutrientKey);
+                                }
+                              }}
+                              sx={{
+                                '& .MuiPieArcLabel-root': {
+                                  fill: 'white',
+                                  fontWeight: 'bold',
+                                  fontSize: '0.9rem',
+                                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+                                },
+                                '& .MuiChartsLegend-root': {
+                                  display: 'none',
+                                },
+                              }}
+                            />
+                          </div>
+                          
+                          <div className={styles.pieInstruction}>
+                            <p>คลิกที่ส่วนต่างๆ ของวงกลมเพื่อดูคำแนะนำ</p>
+                          </div>
+                        </div>
+                        
+                        {selectedNutrient && (
+                          <div className={styles.nutrientAdvice}>
+                            <h4>{nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice].title}</h4>
+                            {hasImage(nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice]) && (
+                              <div className={styles.nutrientImage}>
+                                <Image 
+                                  src={(nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice] as { image: string }).image}
+                                  alt={nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice].title}
+                                  width={300}
+                                  height={200}
+                                  className={styles.nutrientAdviceImage}
+                                />
+                              </div>
+                            )}
+                            {hasDescription(nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice]) && (
+                              <div className={styles.nutrientDescription}>
+                                <p>
+                                  {
+                                    (nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice] as { description?: string }).description
+                                  }
+                                </p>
+                              </div>
+                            )}
+                            {hasSources(nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice]) && (
+                              <div className={styles.nutrientSources}>
+                                <p>
+                                  <strong>แหล่งอาหาร:</strong>{" "}
+                                  {
+                                    (nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice] as { sources?: string }).sources
+                                  }
+                                </p>
+                              </div>
+                            )}
+                            <div className={styles.nutrientBenefits}>
+                              <h5>ประโยชน์ของ{selectedNutrient === 'protein' ? 'โปรตีน' : selectedNutrient === 'fat' ? 'ไขมัน' : 'คาร์โบไฮเดรต'}</h5>
+                            </div>
+                            <div className={styles.adviceList}>
+                              {nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice].advice.map((item, index) => (
+                                <p key={index} className={styles.adviceItem}>{item}</p>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
-                      <div className={styles.modalButtons}>
-                        <button onClick={() => setFoodModalPage(0)} className={styles.button}>
-                          กลับ
-                        </button>
-                      </div>
-                    </>
-                  ) : (
-                    <p>ไม่พบข้อมูลอาหารสำหรับ BMI นี้</p>
-                  )
+                    ) : (
+                      <p>กรุณากรอกข้อมูลผู้ป่วยก่อน</p>
+                    )}
+                  </div>
                 )}
               </div>
             ) : open === insulinTopicIndex ? (
@@ -867,32 +1029,53 @@ export default function Topics() {
             )}
 
             <div className={styles.modalButtonRow}>
-              {open === foodTopicIndex && activeFoodDetails && Array.isArray(activeFoodDetails.content) && foodModalPage < activeFoodDetails.content.length - 1 ? (
-                <button onClick={() => setFoodModalPage(p => p + 1)} className={styles.button}>
-                  ถัดไป
-                </button>
-              ) : null}
-              {open === insulinTopicIndex && activeInsulinSubTopic ? (
-                <button onClick={() => setActiveInsulinSubTopic('')} className={styles.button}>
-                  กลับสู่เมนู
-                </button>
-              ) : null}
-              {open === sugarTopicIndex && sugarModalPage !== 'input' ? (
-                <button onClick={() => setSugarModalPage('input')} className={styles.button}>
-                  กลับสู่เมนู
-                </button>
-              ) : null}
-              {open === exerciseTopicIndex && activeExerciseSubTopic ? (
-                <button onClick={() => setActiveExerciseSubTopic(null)} className={styles.button}>
-                  กลับสู่เมนู
-                </button>
-              ) : null}
+              {/* Food Modal Navigation */}
+              {open === foodTopicIndex && (
+                <>
+                  {foodModalPage > 0 && (
+                    <button onClick={() => setFoodModalPage(foodModalPage - 1)} className={styles.button}>
+                      ย้อนกลับ
+                    </button>
+                  )}
+                  {foodModalPage < 2 && (
+                    <button onClick={() => setFoodModalPage(foodModalPage + 1)} className={styles.button}>
+                      ถัดไป
+                    </button>
+                  )}
+                  {foodModalPage === 2 && (
+                    <button onClick={handleModalClose} className={styles.button}>
+                      เสร็จสิ้น
+                    </button>
+                  )}
+                </>
+              )}
               
-              {/* Main close button appears for most modals */}
-              {open !== complicationsTopicIndex && (
-                 <button onClick={handleModalClose} className={styles.button}>
-                    กลับสู่หน้าหลัก
-            </button>
+              {/* Other Modals Navigation */}
+              {open !== foodTopicIndex && (
+                <>
+                  {open === insulinTopicIndex && activeInsulinSubTopic ? (
+                    <button onClick={() => setActiveInsulinSubTopic('')} className={styles.button}>
+                      ย้อนกลับ
+                    </button>
+                  ) : null}
+                  {open === sugarTopicIndex && sugarModalPage !== 'input' ? (
+                    <button onClick={() => setSugarModalPage('input')} className={styles.button}>
+                      ย้อนกลับ
+                    </button>
+                  ) : null}
+                  {open === exerciseTopicIndex && activeExerciseSubTopic ? (
+                    <button onClick={() => setActiveExerciseSubTopic(null)} className={styles.button}>
+                      ย้อนกลับ
+                    </button>
+                  ) : null}
+                  
+                  {/* Main close button appears for most modals */}
+                  {open !== complicationsTopicIndex && (
+                     <button onClick={handleModalClose} className={styles.button}>
+                        กลับสู่หน้าหลัก
+                </button>
+                  )}
+                </>
               )}
             </div>
           </div>

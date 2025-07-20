@@ -1211,3 +1211,158 @@
   justify-content: center;
   margin-top: 1.5rem;
 }
+
+/* Calorie Calculation and Pie Chart Styles */
+.calorieCalculationContainer {
+  padding: 1rem;
+}
+
+.calorieCalculation {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.calorieCalculation h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+.calorieResult {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1E88E5;
+  margin: 0;
+}
+
+.pieChart {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.pieChartContainer {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pieChartContainer h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #495057;
+  text-align: center;
+}
+
+.pieInstruction {
+  text-align: center;
+  margin-top: 1rem;
+  color: #666;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.nutrientAdvice {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1rem;
+  animation: slideIn 0.3s ease;
+}
+
+.nutrientAdvice h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1E88E5;
+}
+
+.nutrientImage {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.nutrientAdviceImage {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.nutrientDescription {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.nutrientSources {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #e3f2fd;
+  border-radius: 8px;
+  border-left: 4px solid #1E88E5;
+}
+
+.nutrientSources p {
+  margin: 0;
+  line-height: 1.6;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.nutrientBenefits h5 {
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #495057;
+  text-align: left;
+}
+
+.adviceList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.adviceItem {
+  margin: 0;
+  line-height: 1.6;
+  color: #333;
+  font-size: 0.95rem;
+  padding-left: 1.5rem;
+  position: relative;
+  list-style: none;
+}
+
+.adviceItem::before {
+  content: "•";
+  color: #1E88E5;
+  font-weight: bold;
+  font-size: 1.2rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
