@@ -310,6 +310,7 @@ export default function Topics() {
   const [sugarLevel, setSugarLevel] = useState<string>('');
   const [sugarModalPage, setSugarModalPage] = useState<'input' | 'high' | 'low'>('input');
   const [activeExerciseSubTopic, setActiveExerciseSubTopic] = useState<string | null>(null);
+  const [selectedFoodImage, setSelectedFoodImage] = useState<string | null>(null);
 
   const calculateDailyCalories = (bmi: number, weight: number) => {
     let kcalPerKg = 30; // default
@@ -508,6 +509,7 @@ export default function Topics() {
     setSugarLevel('');
     setSugarModalPage('input');
     setActiveExerciseSubTopic(null);
+    setSelectedFoodImage(null);
   };
 
   const handleVideoLoad = (videoType: string) => {
@@ -533,6 +535,16 @@ export default function Topics() {
     { id: 1, value: 40, label: 'โปรตีน 40%', color: '#FF9800' },
     { id: 2, value: 40, label: 'คาร์โบไฮเดรต 40%', color: '#4CAF50' }
   ];
+  
+  const getFoodImagesByKcal = (kcal: number) => {
+    if (kcal <= 1600) {
+      return ['/FoodA1.jpg', '/FoodA2.jpg', '/FoodA3.jpg', '/FoodA4.jpg'];
+    } else if (kcal < 1900) {
+      return ['/FoodB1.jpg', '/FoodB2.jpg', '/FoodB3.jpg', '/FoodB4.jpg'];
+    } else {
+      return ['/FoodC1.jpg', '/FoodC2.jpg', '/FoodC3.jpg', '/FoodC4.jpg'];
+    }
+  };
   
   return (
     <div className={styles.container}>
@@ -646,7 +658,7 @@ export default function Topics() {
                 )}
               </div>
             ) : open === foodTopicIndex ? (
-              <div className={styles.foodModalContent} style={{ maxHeight: '70vh', overflowY: 'auto' }}>
+              <div className={styles.foodModalContent}>
                 {foodModalPage === 0 ? (
                   <div>
                     <div className={styles.modalTitle}>
@@ -696,118 +708,136 @@ export default function Topics() {
                       <p>กรุณากรอกข้อมูลผู้ป่วยก่อน</p>
                     )}
                   </div>
-                ) : (
+                ) : foodModalPage === 1 ? (
                   <div>
-                    <div className={styles.modalTitle}>
-                      <h2>อาหาร</h2>
-                      <button onClick={handleModalClose} className={styles.closeButton}>
-                        ×
-                      </button>
-                    </div>
-                    
-                    {patientData ? (
-                      <div className={styles.calorieCalculationContainer}>
-                        <div className={styles.calorieCalculation}>
-                          <h3>พลังงานที่คุณแม่ควรได้รับต่อวัน</h3>
-                          <div className={styles.calorieResult}>
-                            {patientData.bmi && patientData.weightBefore ? 
-                              `ประมาณ ${formatNumber(calculateDailyCalories(parseFloat(patientData.bmi), parseFloat(patientData.weightBefore)))} Kcal/day` : 
-                              'N/A'
-                            }
-                          </div>
+                    <div className={styles.calorieCalculationContainer}>
+                      <div className={styles.calorieCalculation}>
+                        <h3>พลังงานที่คุณแม่ควรได้รับต่อวัน</h3>
+                        <div className={styles.calorieResult}>
+                          {patientData && patientData.bmi && patientData.weightBefore ? 
+                            `ประมาณ ${formatNumber(calculateDailyCalories(parseFloat(patientData.bmi), parseFloat(patientData.weightBefore)))} Kcal/day` : 
+                            'N/A'
+                          }
+                        </div>
+                      </div>
+                      
+                      <div className={styles.pieChartContainer}>
+                        <h4>สัดส่วนสารอาหาร</h4>
+                        <div className={styles.pieChart}>
+                          <PieChart
+                            series={[
+                              {
+                                data: pieChartData,
+                                arcLabel: 'label',
+                                arcLabelMinAngle: 0,
+                                arcLabelRadius: '60%',
+                                highlightScope: { fade: 'global', highlight: 'item' },
+                                faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+                              },
+                            ]}
+                            height={250}
+                            width={250}
+                            onItemClick={(event, item) => {
+                              if (item) {
+                                const nutrientMap = ['fat', 'protein', 'carbs'];
+                                const selectedNutrientKey = nutrientMap[item.dataIndex];
+                                setSelectedNutrient(selectedNutrient === selectedNutrientKey ? null : selectedNutrientKey);
+                              }
+                            }}
+                            sx={{
+                              '& .MuiPieArcLabel-root': {
+                                fill: 'white',
+                                fontWeight: 'bold',
+                                fontSize: '0.9rem',
+                                textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+                              },
+                              '& .MuiChartsLegend-root': {
+                                display: 'none',
+                              },
+                            }}
+                          />
                         </div>
                         
-                        <div className={styles.pieChartContainer}>
-                          <h4>สัดส่วนสารอาหาร</h4>
-                          <div className={styles.pieChart}>
-                            <PieChart
-                              series={[
+                        <div className={styles.pieInstruction}>
+                          <p>คลิกที่ส่วนต่างๆ ของวงกลมเพื่อดูคำแนะนำ</p>
+                        </div>
+                      </div>
+                      
+                      {selectedNutrient && (
+                        <div className={styles.nutrientAdvice}>
+                          <h4>{nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice].title}</h4>
+                          {hasImage(nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice]) && (
+                            <div className={styles.nutrientImage}>
+                              <Image 
+                                src={(nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice] as { image: string }).image}
+                                alt={nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice].title}
+                                width={300}
+                                height={200}
+                                className={styles.nutrientAdviceImage}
+                              />
+                            </div>
+                          )}
+                          {hasDescription(nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice]) && (
+                            <div className={styles.nutrientDescription}>
+                              <p>
                                 {
-                                  data: pieChartData,
-                                  arcLabel: 'label',
-                                  arcLabelMinAngle: 0,
-                                  arcLabelRadius: '60%',
-                                  highlightScope: { fade: 'global', highlight: 'item' },
-                                  faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
-                                },
-                              ]}
-                              height={250}
-                              width={250}
-                              onItemClick={(event, item) => {
-                                if (item) {
-                                  const nutrientMap = ['fat', 'protein', 'carbs'];
-                                  const selectedNutrientKey = nutrientMap[item.dataIndex];
-                                  setSelectedNutrient(selectedNutrient === selectedNutrientKey ? null : selectedNutrientKey);
+                                  (nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice] as { description?: string }).description
                                 }
-                              }}
-                              sx={{
-                                '& .MuiPieArcLabel-root': {
-                                  fill: 'white',
-                                  fontWeight: 'bold',
-                                  fontSize: '0.9rem',
-                                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-                                },
-                                '& .MuiChartsLegend-root': {
-                                  display: 'none',
-                                },
-                              }}
-                            />
+                              </p>
+                            </div>
+                          )}
+                          {hasSources(nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice]) && (
+                            <div className={styles.nutrientSources}>
+                              <p>
+                                <strong>แหล่งอาหาร:</strong>{" "}
+                                {
+                                  (nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice] as { sources?: string }).sources
+                                }
+                              </p>
+                            </div>
+                          )}
+                          <div className={styles.nutrientBenefits}>
+                            <h5>ประโยชน์ของ{selectedNutrient === 'protein' ? 'โปรตีน' : selectedNutrient === 'fat' ? 'ไขมัน' : 'คาร์โบไฮเดรต'}</h5>
                           </div>
-                          
-                          <div className={styles.pieInstruction}>
-                            <p>คลิกที่ส่วนต่างๆ ของวงกลมเพื่อดูคำแนะนำ</p>
+                          <div className={styles.adviceList}>
+                            {nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice].advice.map((item, index) => (
+                              <p key={index} className={styles.adviceItem}>{item}</p>
+                            ))}
                           </div>
                         </div>
-                        
-                        {selectedNutrient && (
-                          <div className={styles.nutrientAdvice}>
-                            <h4>{nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice].title}</h4>
-                            {hasImage(nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice]) && (
-                              <div className={styles.nutrientImage}>
-                                <Image 
-                                  src={(nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice] as { image: string }).image}
-                                  alt={nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice].title}
-                                  width={300}
-                                  height={200}
-                                  className={styles.nutrientAdviceImage}
-                                />
-                              </div>
-                            )}
-                            {hasDescription(nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice]) && (
-                              <div className={styles.nutrientDescription}>
-                                <p>
-                                  {
-                                    (nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice] as { description?: string }).description
-                                  }
-                                </p>
-                              </div>
-                            )}
-                            {hasSources(nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice]) && (
-                              <div className={styles.nutrientSources}>
-                                <p>
-                                  <strong>แหล่งอาหาร:</strong>{" "}
-                                  {
-                                    (nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice] as { sources?: string }).sources
-                                  }
-                                </p>
-                              </div>
-                            )}
-                            <div className={styles.nutrientBenefits}>
-                              <h5>ประโยชน์ของ{selectedNutrient === 'protein' ? 'โปรตีน' : selectedNutrient === 'fat' ? 'ไขมัน' : 'คาร์โบไฮเดรต'}</h5>
-                            </div>
-                            <div className={styles.adviceList}>
-                              {nutrientAdvice[selectedNutrient as keyof typeof nutrientAdvice].advice.map((item, index) => (
-                                <p key={index} className={styles.adviceItem}>{item}</p>
-                              ))}
-                            </div>
-                          </div>
-                        )}
+                      )}
+                    </div>
+                  </div>
+                ) : foodModalPage === 2 ? (
+                  <div>
+                    <h3 className={styles.modalTitle}>เลือกเมนูอาหาร</h3>
+                    {selectedFoodImage ? (
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                        <Image src={selectedFoodImage} alt="อาหาร" width={350} height={250} style={{ borderRadius: 16, marginBottom: 16 }} />
                       </div>
                     ) : (
-                      <p>กรุณากรอกข้อมูลผู้ป่วยก่อน</p>
+                      <div>
+                        {patientData ? (
+                          <>
+                            <div className={styles.foodGrid}>
+                              {getFoodImagesByKcal(
+                                patientData.bmi && patientData.weightBefore
+                                  ? calculateDailyCalories(parseFloat(patientData.bmi), parseFloat(patientData.weightBefore))
+                                  : 0
+                              ).map((img, idx) => (
+                                <div key={img} className={styles.foodMiniCard} onClick={() => setSelectedFoodImage(img)}>
+                                  <Image src={img} alt={`อาหาร ${idx + 1}`} width={140} height={100} style={{ borderRadius: 12, objectFit: 'cover' }} />
+                                </div>
+                              ))}
+                            </div>
+                          </>
+                        ) : (
+                          <p>กรุณากรอกข้อมูลผู้ป่วยก่อน</p>
+                        )}
+                      </div>
                     )}
                   </div>
-                )}
+                ) : null}
               </div>
             ) : open === insulinTopicIndex ? (
               <div className={styles.insulinModalContent}>
@@ -1031,23 +1061,33 @@ export default function Topics() {
             <div className={styles.modalButtonRow}>
               {/* Food Modal Navigation */}
               {open === foodTopicIndex && (
-                <>
-                  {foodModalPage > 0 && (
-                    <button onClick={() => setFoodModalPage(foodModalPage - 1)} className={styles.button}>
+                <div className={styles.modalButtonRow}>
+                  {/* Food Modal Navigation */}
+                  {selectedFoodImage ? (
+                    <button onClick={() => setSelectedFoodImage(null)} className={styles.button}>
                       ย้อนกลับ
                     </button>
+                  ) : (
+                    <>
+                      {foodModalPage > 0 && (
+                        <button onClick={() => setFoodModalPage(foodModalPage - 1)} className={styles.button}>
+                          ย้อนกลับ
+                        </button>
+                      )}
+                      {/* There are now 3 pages: 0 (info), 1 (calorie), 2 (grid) */}
+                      {foodModalPage < 2 && (
+                        <button onClick={() => setFoodModalPage(foodModalPage + 1)} className={styles.button}>
+                          ถัดไป
+                        </button>
+                      )}
+                      {foodModalPage === 2 && !selectedFoodImage && (
+                        <button onClick={handleModalClose} className={styles.button}>
+                        กลับสู่หน้าหลัก
+                        </button>
+                      )}
+                    </>
                   )}
-                  {foodModalPage < 2 && (
-                    <button onClick={() => setFoodModalPage(foodModalPage + 1)} className={styles.button}>
-                      ถัดไป
-                    </button>
-                  )}
-                  {foodModalPage === 2 && (
-                    <button onClick={handleModalClose} className={styles.button}>
-                      เสร็จสิ้น
-                    </button>
-                  )}
-                </>
+                </div>
               )}
               
               {/* Other Modals Navigation */}
