@@ -369,6 +369,7 @@ export default function Topics() {
   const [activeInsulinSubTopic, setActiveInsulinSubTopic] = useState<string>('');
   const [videoLoading, setVideoLoading] = useState<{ [key: string]: boolean }>({});
   const [videoError, setVideoError] = useState<{ [key: string]: boolean }>({});
+  const [videoRefs, setVideoRefs] = useState<{ [key: string]: HTMLVideoElement | null }>({});
   const [sugarLevel, setSugarLevel] = useState<string>('');
   const [sugarModalPage, setSugarModalPage] = useState<'input' | 'high' | 'low'>('input');
   const [activeExerciseSubTopic, setActiveExerciseSubTopic] = useState<string | null>(null);
@@ -384,39 +385,25 @@ export default function Topics() {
 
   useEffect(() => {
     if (open === insulinTopicIndex && activeInsulinSubTopic === 'วีดีโอ') {
-      // Add event listeners for video loading states
-      setTimeout(() => {
-        const needleVideo = document.getElementById('needle-video') as HTMLVideoElement;
-        const penVideo = document.getElementById('pen-video') as HTMLVideoElement;
-        const needleLoading = document.getElementById('needle-loading');
-        const penLoading = document.getElementById('pen-loading');
-
-        if (needleVideo && needleLoading) {
-          needleVideo.addEventListener('loadstart', () => {
-            needleLoading.style.display = 'block';
-          });
-          needleVideo.addEventListener('canplay', () => {
-            needleLoading.style.display = 'none';
-          });
-          needleVideo.addEventListener('error', () => {
-            needleLoading.style.display = 'none';
-          });
-        }
-
-        if (penVideo && penLoading) {
-          penVideo.addEventListener('loadstart', () => {
-            penLoading.style.display = 'block';
-          });
-          penVideo.addEventListener('canplay', () => {
-            penLoading.style.display = 'none';
-          });
-          penVideo.addEventListener('error', () => {
-            penLoading.style.display = 'none';
-          });
-        }
-      }, 100);
+      // Reset loading states when opening video subtopic
+      setVideoLoading({ needle: true, pen: true });
+      setVideoError({ needle: false, pen: false });
     }
   }, [open, insulinTopicIndex, activeInsulinSubTopic]);
+
+  const handleVideoLoadStart = (videoType: 'needle' | 'pen') => {
+    setVideoLoading(prev => ({ ...prev, [videoType]: true }));
+    setVideoError(prev => ({ ...prev, [videoType]: false }));
+  };
+
+  const handleVideoCanPlay = (videoType: 'needle' | 'pen') => {
+    setVideoLoading(prev => ({ ...prev, [videoType]: false }));
+  };
+
+  const handleVideoError = (videoType: 'needle' | 'pen') => {
+    setVideoLoading(prev => ({ ...prev, [videoType]: false }));
+    setVideoError(prev => ({ ...prev, [videoType]: true }));
+  };
 
   // Download handler
   const handleDownload = async () => {
@@ -488,19 +475,56 @@ export default function Topics() {
     setActiveExerciseSubTopic(null);
   };
 
-  const handleVideoLoad = (videoType: string) => {
-    setVideoLoading(prev => ({ ...prev, [videoType]: false }));
-  };
+  const VideoPlayer = ({ src, title, videoType }: { src: string; title: string; videoType: 'needle' | 'pen' }) => (
+    <div style={{ marginBottom: '1.5rem' }}>
+      <div style={{ fontWeight: 600, color: '#1E88E5', fontSize: '17px', marginBottom: '0.5rem' }}>
+        {title}
+      </div>
+      <div style={{ position: 'relative' }}>
+        <video
+          controls
+          width="100%"
+          style={{ maxWidth: '400px', borderRadius: '16px', boxShadow: '0 2px 8px rgba(30,136,229,0.08)' }}
+          preload="metadata"
+          onLoadStart={() => handleVideoLoadStart(videoType)}
+          onCanPlay={() => handleVideoCanPlay(videoType)}
+          onError={() => handleVideoError(videoType)}
+        >
+          <source src={src} type="video/mp4" />
+          ขออภัย ไม่สามารถเล่นวิดีโอนี้ได้
+        </video>
+        {videoLoading[videoType] && (
+          <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            background: 'rgba(0,0,0,0.7)',
+            color: 'white',
+            padding: '1rem',
+            borderRadius: '8px'
+          }}>
+            กำลังโหลดวิดีโอ...
+          </div>
+        )}
+        {videoError[videoType] && (
+          <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            background: 'rgba(255,0,0,0.7)',
+            color: 'white',
+            padding: '1rem',
+            borderRadius: '8px'
+          }}>
+            เกิดข้อผิดพลาดในการโหลดวิดีโอ
+          </div>
+        )}
+      </div>
+    </div>
+  );
 
-  const handleVideoError = (videoType: string) => {
-    setVideoLoading(prev => ({ ...prev, [videoType]: false }));
-    setVideoError(prev => ({ ...prev, [videoType]: true }));
-  };
-
-  const handleVideoLoadStart = (videoType: string) => {
-    setVideoLoading(prev => ({ ...prev, [videoType]: true }));
-    setVideoError(prev => ({ ...prev, [videoType]: false }));
-  };
   
   return (
     <div className={styles.container}>
@@ -647,18 +671,27 @@ export default function Topics() {
                   // Detailed View
                   <div className={styles.insulinDetailContent}>
                     <h3 className={styles.modalTitle}>{insulinContent[activeInsulinSubTopic as keyof typeof insulinContent].title}</h3>
-                    {insulinContent[activeInsulinSubTopic as keyof typeof insulinContent].content.map((text, i) => 
-                      <p key={i} dangerouslySetInnerHTML={{ __html: text }} />
+                    {activeInsulinSubTopic === 'วีดีโอ' ? (
+                      <div>
+                        <VideoPlayer src="/Needle_Type.mp4" title="แบบเข็ม" videoType="needle" />
+                        <VideoPlayer src="/Pen_Type.mp4" title="แบบปากกา" videoType="pen" />
+                      </div>
+                    ) : (
+                      <>
+                        {insulinContent[activeInsulinSubTopic as keyof typeof insulinContent].content.map((text, i) => 
+                          <p key={i} dangerouslySetInnerHTML={{ __html: text }} />
+                        )}
+                        {currentInsulinContent && hasImage(currentInsulinContent) && (
+                            <Image 
+                              src={currentInsulinContent.image}
+                              alt={currentInsulinContent.title}
+                              width={300}
+                              height={200}
+                              className={styles.insulinDetailImage}
+                            />
+                         )}
+                      </>
                     )}
-                    {currentInsulinContent && hasImage(currentInsulinContent) && (
-                        <Image 
-                          src={currentInsulinContent.image}
-                          alt={currentInsulinContent.title}
-                          width={300}
-                          height={200}
-                          className={styles.insulinDetailImage}
-                        />
-                     )}
                   </div>
                 ) : (
                   // Sub-topic Selection View
