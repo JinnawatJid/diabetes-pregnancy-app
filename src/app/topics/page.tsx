@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { usePatient } from "../context/PatientContext";
 import styles from './page.module.css';
@@ -231,15 +231,21 @@ const insulinContent = {
     content: [
       '<div style="margin-bottom:2rem;">'
         + '<div style="font-weight:600;color:#1E88E5;font-size:17px;margin-bottom:0.5rem;">แบบเข็ม</div>'
-        + '<video controls width="100%" style="max-width:400px;border-radius:16px;box-shadow:0 2px 8px rgba(30,136,229,0.08);margin-bottom:1.5rem;">'
+        + '<div id="needle-video-container" style="position:relative;margin-bottom:1.5rem;">'
+        + '<video id="needle-video" controls width="100%" style="max-width:400px;border-radius:16px;box-shadow:0 2px 8px rgba(30,136,229,0.08);" preload="metadata">'
         + '<source src="/Needle_Type.mp4" type="video/mp4" />'
         + 'ขออภัย ไม่สามารถเล่นวิดีโอนี้ได้'
         + '</video>'
+        + '<div id="needle-loading" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.7);color:white;padding:1rem;border-radius:8px;display:none;">กำลังโหลดวิดีโอ...</div>'
+        + '</div>'
         + '<div style="font-weight:600;color:#1E88E5;font-size:17px;margin-bottom:0.5rem;">แบบปากกา</div>'
-        + '<video controls width="100%" style="max-width:400px;border-radius:16px;box-shadow:0 2px 8px rgba(30,136,229,0.08);">'
+        + '<div id="pen-video-container" style="position:relative;">'
+        + '<video id="pen-video" controls width="100%" style="max-width:400px;border-radius:16px;box-shadow:0 2px 8px rgba(30,136,229,0.08);" preload="metadata">'
         + '<source src="/Pen_Type.mp4" type="video/mp4" />'
         + 'ขออภัย ไม่สามารถเล่นวิดีโอนี้ได้'
         + '</video>'
+        + '<div id="pen-loading" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.7);color:white;padding:1rem;border-radius:8px;display:none;">กำลังโหลดวิดีโอ...</div>'
+        + '</div>'
       + '</div>'
     ]
   },
@@ -360,7 +366,9 @@ export default function Topics() {
   const [downloading, setDownloading] = useState(false);
   const [showDownload, setShowDownload] = useState(false);
   const [foodModalPage, setFoodModalPage] = useState(0);
-  const [activeInsulinSubTopic, setActiveInsulinSubTopic] = useState<string | null>(null);
+  const [activeInsulinSubTopic, setActiveInsulinSubTopic] = useState<string>('');
+  const [videoLoading, setVideoLoading] = useState<{ [key: string]: boolean }>({});
+  const [videoError, setVideoError] = useState<{ [key: string]: boolean }>({});
   const [sugarLevel, setSugarLevel] = useState<string>('');
   const [sugarModalPage, setSugarModalPage] = useState<'input' | 'high' | 'low'>('input');
   const [activeExerciseSubTopic, setActiveExerciseSubTopic] = useState<string | null>(null);
@@ -373,6 +381,42 @@ export default function Topics() {
   const complicationsTopicIndex = topics.findIndex(t => t.title === 'ภาวะแทรกซ้อน');
   const activeFoodDetails = patientData?.bmiCategory ? foodDetails[patientData.bmiCategory as keyof typeof foodDetails] : null;
   const currentInsulinContent = activeInsulinSubTopic ? insulinContent[activeInsulinSubTopic as keyof typeof insulinContent] : null;
+
+  useEffect(() => {
+    if (open === insulinTopicIndex && activeInsulinSubTopic === 'วีดีโอ') {
+      // Add event listeners for video loading states
+      setTimeout(() => {
+        const needleVideo = document.getElementById('needle-video') as HTMLVideoElement;
+        const penVideo = document.getElementById('pen-video') as HTMLVideoElement;
+        const needleLoading = document.getElementById('needle-loading');
+        const penLoading = document.getElementById('pen-loading');
+
+        if (needleVideo && needleLoading) {
+          needleVideo.addEventListener('loadstart', () => {
+            needleLoading.style.display = 'block';
+          });
+          needleVideo.addEventListener('canplay', () => {
+            needleLoading.style.display = 'none';
+          });
+          needleVideo.addEventListener('error', () => {
+            needleLoading.style.display = 'none';
+          });
+        }
+
+        if (penVideo && penLoading) {
+          penVideo.addEventListener('loadstart', () => {
+            penLoading.style.display = 'block';
+          });
+          penVideo.addEventListener('canplay', () => {
+            penLoading.style.display = 'none';
+          });
+          penVideo.addEventListener('error', () => {
+            penLoading.style.display = 'none';
+          });
+        }
+      }, 100);
+    }
+  }, [open, insulinTopicIndex, activeInsulinSubTopic]);
 
   // Download handler
   const handleDownload = async () => {
@@ -436,10 +480,26 @@ export default function Topics() {
   const handleModalClose = () => {
     setOpen(null);
     setFoodModalPage(0);
-    setActiveInsulinSubTopic(null);
+    setActiveInsulinSubTopic('');
+    setVideoLoading({});
+    setVideoError({});
     setSugarLevel('');
     setSugarModalPage('input');
     setActiveExerciseSubTopic(null);
+  };
+
+  const handleVideoLoad = (videoType: string) => {
+    setVideoLoading(prev => ({ ...prev, [videoType]: false }));
+  };
+
+  const handleVideoError = (videoType: string) => {
+    setVideoLoading(prev => ({ ...prev, [videoType]: false }));
+    setVideoError(prev => ({ ...prev, [videoType]: true }));
+  };
+
+  const handleVideoLoadStart = (videoType: string) => {
+    setVideoLoading(prev => ({ ...prev, [videoType]: true }));
+    setVideoError(prev => ({ ...prev, [videoType]: false }));
   };
   
   return (
@@ -807,7 +867,7 @@ export default function Topics() {
                 </button>
               ) : null}
               {open === insulinTopicIndex && activeInsulinSubTopic ? (
-                <button onClick={() => setActiveInsulinSubTopic(null)} className={styles.button}>
+                <button onClick={() => setActiveInsulinSubTopic('')} className={styles.button}>
                   กลับสู่เมนู
                 </button>
               ) : null}
