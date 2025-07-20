@@ -37,112 +37,46 @@ const bmiDetails: { [key: string]: { title: string; description: string; image: 
 };
 
 const foodDetails = {
-  'น้ำหนักต่ำกว่าเกณฑ์': { // Underweight
-    pages: [
-      {
-        type: 'text',
-        title: 'อาหารที่แนะนำให้รับประทาน',
-        subtitle: 'น้ำหนักต่ำกว่าเกณฑ์',
-        content: [
-          'เน้นการรับประทานที่มีโปรตีนสูง เช่น อกไก่ ไข่ ปลาทะเล นมวัว/นมถั่วเหลือง เป็นต้น',
-          'รับประทานคาร์โบไฮเดรตเชิงซ้อน เช่น ข้าวกล้อง ข้าวโอ๊ต ฟักทอง เป็นต้น',
-          'รับประทานผลไม้ที่มีน้ำตาลต่ำ เช่น แอปเปิ้ล ฝรั่ง ชมพู่ เป็นต้น',
-          'รับประทานไขมันดี เช่น น้ำมันรำข้าว น้ำมันมะกอก เป็นต้น',
-          'หลีกเลี่ยง ชา กาแฟ น้ำอัดลม ขนมหวานจัด เป็นต้น',
-        ],
-      },
-      {
-        type: 'image',
-        title: 'ตัวอย่างอาหารที่แนะนำ',
-        subtitle: 'น้ำหนักต่ำกว่าเกณฑ์',
-        content: [
-          { image: '/chickenBreast.png', description: 'เน้นการรับประทานที่มีโปรตีนสูง เช่น อกไก่' },
-          { image: '/brownRice.png', description: 'รับประทานคาร์โบไฮเดรตเชิงซ้อน เช่น ข้าวกล้อง' },
-          { image: '/apple1.png', description: 'รับประทานผลไม้ที่มีน้ำตาลต่ำ เช่น แอปเปิ้ล' },
-          { image: '/oliveOil.png', description: 'รับประทานไขมันดี เช่น น้ำมันมะกอก' },
-        ],
-      },
-    ],
+  underweight: {
+    title: "อาหารสำหรับน้ำหนักต่ำกว่าเกณฑ์",
+    content: [
+      "• เพิ่มการรับประทานอาหารที่มีแคลอรี่สูง",
+      "• รับประทานอาหาร 5-6 มื้อต่อวัน",
+      "• เพิ่มโปรตีนจากเนื้อสัตว์ ไข่ และนม",
+      "• รับประทานไขมันดี เช่น น้ำมันมะกอก อะโวคาโด",
+      "• หลีกเลี่ยงอาหารที่มีน้ำตาลสูง"
+    ]
   },
-  'น้ำหนักตามเกณฑ์': { // Normal
-    pages: [
-      {
-        type: 'text',
-        title: 'อาหารที่แนะนำให้รับประทาน',
-        subtitle: 'น้ำหนักตามเกณฑ์',
-        content: [
-          'เน้นอาหาร เลือกกินอาหารมีประโยชน์ให้ครบทั้ง 5 หมู่',
-          'เลือกอาหารประเภทโปรตีนเป็นหลัก เช่น เนื้อ นม ไข่ ถั่ว',
-          'รับประทานวิตามินจากพืชผักและผลไม้',
-          'ไม่เน้นอาหารประเภทคาร์โบไฮเดรต และอาหารที่มีน้ำตาลสูง',
-          'รับประทานอาหารย่อยง่ายและมีกากใย เช่น โปรตีนจากเนื้อปลา และวิตามินจากผัก',
-        ],
-      },
-      {
-        type: 'image',
-        title: 'ตัวอย่างอาหารที่แนะนำ',
-        subtitle: 'น้ำหนักตามเกณฑ์',
-        content: [
-          { image: '/5Group.png', description: 'เลือกกินอาหารมีประโยชน์ให้ครบทั้ง 5 หมู่' },
-          { image: '/salmon.png', description: 'เลือกอาหารประเภทโปรตีนเป็นหลัก' },
-          { image: '/veg.png', description: 'รับประทานวิตามินจากพืชผักและผลไม้' },
-          { image: '/fiber.png', description: 'รับประทานอาหารย่อยง่ายและมีกากใย' },
-        ],
-      },
-    ],
+  normal: {
+    title: "อาหารสำหรับน้ำหนักปกติ",
+    content: [
+      "• รับประทานอาหารให้ครบ 5 หมู่",
+      "• เน้นผักผลไม้และธัญพืช",
+      "• จำกัดอาหารที่มีน้ำตาลและไขมันสูง",
+      "• รับประทานอาหาร 3 มื้อต่อวัน",
+      "• ดื่มน้ำให้เพียงพอ"
+    ]
   },
-  'น้ำหนักสูงกว่าเกณฑ์': { // Overweight
-    pages: [
-      {
-        type: 'text',
-        title: 'อาหารที่แนะนำให้รับประทาน',
-        subtitle: 'น้ำหนักสูงกว่าเกณฑ์',
-        content: [
-          'เน้นอาหารที่มีโปรตีนสูง เช่น ไข่ต้ม ไก่ไม่ติดหนัง ปลา เต้าหู้ นมพร่องมันเนยโดยสามารถชะลอความหิวระหว่างวัน  ทำให้ควบคุมน้ำตาลในเลือดให้นิ่งขึ้น',
-          'เน้นผักและผลไม้ที่มีน้ำตาลน้อย เช่น ตำลึง คะน้า บร็อคโคลี แครอท แตงกวา เนื่องจากใยอาหารจะช่วยการดูดซึมน้ำตาล',
-          'เลือกรับประทานไขมันที่ดี เช่น น้ำมันมะกอกหรือน้ำมันรำข้าว เป็นหลักในการปรุงประกอบอาหาร ลดอาหารที่มีไขมันทรานส์ เช่น เนยขาว มาการีน และไขมันที่มีการเติม H บางส่วนลงไปในโมเลกุลไขมัน',
-          'ควบคุมปริมาณคาร์โบไฮเดรต เลือกเป็นคาร์โบไฮเดรตเชิงซ้อน เช่น ข้าวกล้อง ขนมปังโฮลวีต ข้าวโอ๊ต แทนข้าวขาวหรือแป้งขัดสีโดยเลือกรับประทานน้อยแต่บ่อยครั้ง',
-        ],
-      },
-      {
-        type: 'image',
-        title: 'ตัวอย่างอาหารที่แนะนำ',
-        subtitle: 'น้ำหนักสูงกว่าเกณฑ์',
-        content: [
-          { image: '/highProtein.png', description: 'เน้นอาหารที่มีโปรตีนสูง เช่น ไข่ต้ม ไก่ไม่ติดหนัง ปลา' },
-          { image: '/veg2.png', description: 'เน้นผักและผลไม้ที่มีน้ำตาลน้อย เช่น ตำลึง คะน้า' },
-          { image: '/goodFat.png', description: 'เลือกรับประทานไขมันที่ดี ลดอาหารที่มีไขมันทรานส์' },
-          { image: '/carb.png', description: 'เลือกคาร์โบไฮเดรตเชิงซ้อน เช่น ข้าวกล้อง ขนมปังโฮลวีต' },
-        ],
-      },
-    ],
+  overweight: {
+    title: "อาหารสำหรับน้ำหนักเกิน",
+    content: [
+      "• ลดการรับประทานอาหารที่มีแคลอรี่สูง",
+      "• เพิ่มการรับประทานผักและผลไม้",
+      "• จำกัดอาหารที่มีน้ำตาลและไขมันสูง",
+      "• รับประทานอาหาร 3 มื้อต่อวัน",
+      "• ออกกำลังกายควบคู่กับการควบคุมอาหาร"
+    ]
   },
-  'อ้วน': { // Obese
-    pages: [
-      {
-        type: 'text',
-        title: 'อาหารที่แนะนำให้รับประทาน',
-        subtitle: 'อ้วน',
-        content: [
-          'เน้นอาหารที่มีโปรตีนสูง เช่น ไข่ต้ม ไก่ไม่ติดหนัง ปลา เต้าหู้ นมพร่องมันเนย โดยสามารถชะลอความหิวระหว่างวัน  ทำให้ควบคุมน้ำตาลในเลือดให้นิ่งขึ้น',
-          'เน้นผักและผลไม้ที่มีน้ำตาลน้อย เช่น ตำลึง คะน้า บร็อคโคลี แครอท แตงกวา เนื่องจากใยอาหารจะช่วยการดูดซึมน้ำตาล',
-          'ควบคุมปริมาณคาร์โบไฮเดรต เลือกเป็นคาร์โบไฮเดรตเชิงซ้อน เช่น ข้าวกล้อง ขนมปังโฮลวีต ข้าวโอ๊ต แทนข้าวขาวหรือแป้งขัดสี โดยเลือกรับประทานน้อยแต่บ่อยครั้ง',
-        ],
-      },
-      {
-        type: 'image',
-        title: 'ตัวอย่างอาหารที่แนะนำ',
-        subtitle: 'อ้วน',
-        content: [
-          { image: '/highProtein2.png', description: 'เน้นอาหารที่มีโปรตีนสูง เช่น ไข่ต้ม ไก่ไม่ติดหนัง ปลา' },
-          { image: '/veg3.png', description: 'เน้นผักและผลไม้ที่มีน้ำตาลน้อย เช่น ตำลึง คะน้า' },
-          { image: '/avocado.png', description: 'ใยอาหารจาก อาโวคาโด จะช่วยการดูดซึมน้ำตาล' },
-          { image: '/carb3.png', description: 'เลือกคาร์โบไฮเดรตเชิงซ้อน เช่น ข้าวกล้อง ขนมปังโฮลวีต' },
-        ],
-      },
-    ],
-  },
-  // Other BMI categories can be added here later
+  obese: {
+    title: "อาหารสำหรับโรคอ้วน",
+    content: [
+      "• ควบคุมแคลอรี่อย่างเข้มงวด",
+      "• เพิ่มการรับประทานผักและผลไม้",
+      "• หลีกเลี่ยงอาหารที่มีน้ำตาลและไขมันสูง",
+      "• รับประทานอาหาร 3 มื้อต่อวัน",
+      "• ปรึกษาแพทย์หรือนักโภชนาการ"
+    ]
+  }
 };
 
 const topics = [
@@ -374,15 +308,40 @@ export default function Topics() {
   const [sugarLevel, setSugarLevel] = useState<string>('');
   const [sugarModalPage, setSugarModalPage] = useState<'input' | 'high' | 'low'>('input');
   const [activeExerciseSubTopic, setActiveExerciseSubTopic] = useState<string | null>(null);
-  const currentExerciseContent = activeExerciseSubTopic ? exerciseContent[activeExerciseSubTopic as keyof typeof exerciseContent] : null;
-  const bmiTopicIndex = topics.findIndex(t => t.title === 'bmi. แปลผล');
+
+  const getCalorieRequirement = (bmi: number) => {
+    if (bmi < 18.5) return "ประมาณ 40 kcal/kg";
+    if (bmi >= 18.5 && bmi <= 24.9) return "ประมาณ 30 kcal/kg";
+    if (bmi >= 25 && bmi <= 29.9) return "ประมาณ 25 kcal/kg";
+    if (bmi >= 30) return "ประมาณ 12 kcal/kg";
+    return "ประมาณ 30 kcal/kg"; // default
+  };
+
+  const getBMICategory = (bmi: number) => {
+    if (bmi < 18.5) return "underweight";
+    if (bmi >= 18.5 && bmi <= 24.9) return "normal";
+    if (bmi >= 25 && bmi <= 29.9) return "overweight";
+    if (bmi >= 30) return "obese";
+    return "normal";
+  };
+
+  const getBMIDescription = (bmi: number) => {
+    if (bmi < 18.5) return "(น้ำหนักต่ำกว่าเกณฑ์)";
+    if (bmi >= 18.5 && bmi <= 24.9) return "(น้ำหนักตามเกณฑ์)";
+    if (bmi >= 25 && bmi <= 29.9) return "(น้ำหนักสูงกว่าเกณฑ์)";
+    if (bmi >= 30) return "(โรคอ้วน)";
+    return "(น้ำหนักตามเกณฑ์)";
+  };
+
   const foodTopicIndex = topics.findIndex(t => t.title === 'อาหาร');
+  const bmiTopicIndex = topics.findIndex(t => t.title === 'bmi. แปลผล');
   const insulinTopicIndex = topics.findIndex(t => t.title === 'หญิงตั้งครรภ์ที่ฉีดอินซูลิน');
   const sugarTopicIndex = topics.findIndex(t => t.title === 'ค่าระดับน้ำตาล และวิธีการจัดการ');
   const exerciseTopicIndex = topics.findIndex(t => t.title === 'ออกกำลังกาย');
   const complicationsTopicIndex = topics.findIndex(t => t.title === 'ภาวะแทรกซ้อน');
-  const activeFoodDetails = patientData?.bmiCategory ? foodDetails[patientData.bmiCategory as keyof typeof foodDetails] : null;
+  const activeFoodDetails = patientData?.bmi ? foodDetails[getBMICategory(parseFloat(patientData.bmi)) as keyof typeof foodDetails] : null;
   const currentInsulinContent = activeInsulinSubTopic ? insulinContent[activeInsulinSubTopic as keyof typeof insulinContent] : null;
+  const currentExerciseContent = activeExerciseSubTopic ? exerciseContent[activeExerciseSubTopic as keyof typeof exerciseContent] : null;
 
   useEffect(() => {
     if (open === insulinTopicIndex && activeInsulinSubTopic === 'วีดีโอ') {
@@ -616,31 +575,76 @@ export default function Topics() {
                 )}
               </div>
             ) : open === foodTopicIndex ? (
-              <div className={styles.foodModalContent}>
-                {activeFoodDetails && activeFoodDetails.pages[foodModalPage] ? (
-                  <>
-                    <h3 className={styles.modalTitle}>{activeFoodDetails.pages[foodModalPage].title}</h3>
-                    <div className={styles.foodCategorySubtitle}>{activeFoodDetails.pages[foodModalPage].subtitle}</div>
-
-                    {activeFoodDetails.pages[foodModalPage].type === 'text' && (
-                      <ul className={styles.foodTextList}>
-                        {(activeFoodDetails.pages[foodModalPage].content as string[]).map((item, i) => <li key={i}>{item}</li>)}
-                      </ul>
-                    )}
-
-                    {activeFoodDetails.pages[foodModalPage].type === 'image' && (
-                      <div className={styles.foodImageGrid}>
-                        {(activeFoodDetails.pages[foodModalPage].content as { image: string; description: string }[]).map((item, i) => (
-                          <div key={i} className={styles.foodImageItem}>
-                            <Image src={item.image} alt={item.description} width={150} height={100} className={styles.foodImage} />
-                            <p>{item.description}</p>
+              <div className={styles.foodModalContent} style={{ maxHeight: '70vh', overflowY: 'auto' }}>
+                {foodModalPage === 0 ? (
+                  <div>
+                    <div className={styles.modalTitle}>
+                      <h2>อาหาร</h2>
+                      <button onClick={handleModalClose} className={styles.closeButton}>
+                        ×
+                      </button>
+                    </div>
+                    
+                    {patientData ? (
+                      <div className={styles.foodInfoContainer}>
+                        <div className={styles.userInfo}>
+                          <div className={styles.infoRow}>
+                            <span className={styles.infoLabel}>น้ำหนัก:</span>
+                            <span className={styles.infoValue}>{patientData.weightBefore || 'N/A'} กก.</span>
                           </div>
+                          <div className={styles.infoRow}>
+                            <span className={styles.infoLabel}>ส่วนสูง:</span>
+                            <span className={styles.infoValue}>{patientData.height} ซม.</span>
+                          </div>
+                          <div className={styles.infoRow}>
+                            <span className={styles.infoLabel}>ดัชนีมวลกาย (BMI):</span>
+                            <span className={styles.infoValue}>
+                              {patientData.bmi} {patientData.bmi ? getBMIDescription(parseFloat(patientData.bmi)) : ''}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <div className={styles.calorieSection}>
+                          <h3>พลังงานที่ต้องการต่อวัน</h3>
+                          <p className={styles.calorieRequirement}>
+                            {patientData.bmi ? getCalorieRequirement(parseFloat(patientData.bmi)) : 'N/A'}
+                          </p>
+                        </div>
+                        
+                        <div className={styles.foodImage}>
+                          <Image 
+                            src="/FoodBMI.jpeg" 
+                            alt="Food BMI Guide"
+                            width={300}
+                            height={200}
+                            className={styles.foodGuideImage}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <p>กรุณากรอกข้อมูลผู้ป่วยก่อน</p>
+                    )}
+                  </div>
+                ) : (
+                  activeFoodDetails ? (
+                    <>
+                      <h3 className={styles.modalTitle}>{activeFoodDetails.title}</h3>
+                      <div>
+                        {activeFoodDetails.content.map((item, index) => (
+                          <p key={index} className={styles.modalText}>
+                            {item}
+                          </p>
                         ))}
                       </div>
-                    )}
-                  </>
-                ) : (
-                  <div className={styles.bmiPlaceholder}>กรุณากรอกข้อมูลเพื่อดูคำแนะนำด้านอาหาร</div>
+                      <div className={styles.modalButtons}>
+                        <button onClick={() => setFoodModalPage(0)} className={styles.button}>
+                          กลับ
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <p>ไม่พบข้อมูลอาหารสำหรับ BMI นี้</p>
+                  )
                 )}
               </div>
             ) : open === insulinTopicIndex ? (
@@ -863,7 +867,7 @@ export default function Topics() {
             )}
 
             <div className={styles.modalButtonRow}>
-              {open === foodTopicIndex && activeFoodDetails && foodModalPage < activeFoodDetails.pages.length - 1 ? (
+              {open === foodTopicIndex && activeFoodDetails && Array.isArray(activeFoodDetails.content) && foodModalPage < activeFoodDetails.content.length - 1 ? (
                 <button onClick={() => setFoodModalPage(p => p + 1)} className={styles.button}>
                   ถัดไป
                 </button>

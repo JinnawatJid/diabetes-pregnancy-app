@@ -1106,3 +1106,108 @@
     font-size: 14px;
   }
 }
+
+/* Food Modal Styles */
+.foodInfoContainer {
+  padding: 1rem;
+}
+
+.userInfo {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.infoRow:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.infoLabel {
+  font-weight: 600;
+  color: #495057;
+  font-size: 0.95rem;
+}
+
+.infoValue {
+  font-weight: 500;
+  color: #1E88E5;
+  font-size: 0.95rem;
+}
+
+.calorieSection {
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  color: #333;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.calorieSection h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+.calorieRequirement {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+  color: #1E88E5;
+}
+
+.foodImage {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.foodGuideImage {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.nextButton {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.nextButton:hover {
+  background: linear-gradient(135deg, #45a049, #3d8b40);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.modalText {
+  margin: 0.75rem 0;
+  line-height: 1.6;
+  color: #333;
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
