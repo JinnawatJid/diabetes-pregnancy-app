@@ -1070,12 +1070,16 @@ export default function Topics() {
             {open === contactTopicIndex && (
               <div className={styles.contactModalContent}>
                 <p className={styles.lineOfficialText}>Line Official Account: เบาใจเรื่องเบาหวาน</p>
-                <Image
+                <a
+                    href="https://lin.ee/FU5Fov47"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  ><Image
                   src="/LineQrCode.PNG"
                   alt="Line QR Code"
                   width={200}
                   height={200}
-                />
+                /></a>
                 <p>
                   <a
                     href="https://lin.ee/FU5Fov47"
