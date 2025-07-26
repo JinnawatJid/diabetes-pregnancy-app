@@ -1406,7 +1406,13 @@
   color: #00B900;
   font-weight: 600;
   font-size: 1.1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.lineText {
+  color: #00B900;
+  font-weight: 400;
+  font-size: 1rem;
 }
 
 .lineLink {

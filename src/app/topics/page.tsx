@@ -1069,7 +1069,7 @@ export default function Topics() {
 
             {open === contactTopicIndex && (
               <div className={styles.contactModalContent}>
-                <p className={styles.lineOfficialText}>Line Official Account: เบาใจเรื่องเบาหวาน</p>
+                <p className={styles.lineOfficialText}>Line Official: เบาใจเรื่องเบาหวาน</p>
                 <a
                     href="https://lin.ee/FU5Fov47"
                     target="_blank"
@@ -1090,6 +1090,7 @@ export default function Topics() {
                     LineID: @524russo
                   </a>
                 </p>
+                <p className={styles.lineText}>แสกน หรือคลิ๊กที่ Qrcode ได้เลย!</p>
               </div>
             )}
 
