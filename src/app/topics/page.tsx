@@ -1071,7 +1071,7 @@ export default function Topics() {
               <div className={styles.contactModalContent}>
                 <p className={styles.lineOfficialText}>Line Official Account: เบาใจเรื่องเบาหวาน</p>
                 <Image
-                  src="/LineQrCode.png"
+                  src="/LineQrCode.PNG"
                   alt="Line QR Code"
                   width={200}
                   height={200}
