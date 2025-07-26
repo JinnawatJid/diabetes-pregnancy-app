@@ -162,6 +162,13 @@
   gap: 24px;
   max-width: 700px;
   width: 100%;
+  position: relative;
+}
+.contactCard {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: 100%;
+  max-width: 338px;
 }
 
 @media (max-width: 600px) {
@@ -1386,4 +1393,25 @@
 }
 .foodMiniCard:hover {
   box-shadow: 0 4px 12px rgba(30,136,229,0.15);
+}
+
+.contactModalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.lineOfficialText {
+  color: #00B900;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.lineLink {
+  color: #00B900;
+  text-decoration: none;
+  font-weight: 600;
+  margin-top: 1rem;
 }

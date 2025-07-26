@@ -111,6 +111,10 @@ const topics = [
     icon: "/Complications.png",
     details: `ภาวะแทรกซ้อนที่อาจเกิดขึ้น เช่น ความดันสูง, โปรตีนในปัสสาวะ\nควรพบแพทย์ตามนัดและดูแลสุขภาพอย่างใกล้ชิด`
   },
+  {
+    title: "ช่องทางการติดต่อ",
+    icon: "/Contact.png",
+  },
 ];
 
 const insulinSubTopics = [
@@ -401,6 +405,7 @@ export default function Topics() {
   const sugarTopicIndex = topics.findIndex(t => t.title === 'ค่าระดับน้ำตาล และวิธีการจัดการ');
   const exerciseTopicIndex = topics.findIndex(t => t.title === 'ออกกำลังกาย');
   const complicationsTopicIndex = topics.findIndex(t => t.title === 'ภาวะแทรกซ้อน');
+  const contactTopicIndex = topics.findIndex(t => t.title === 'ช่องทางการติดต่อ');
   const activeFoodDetails = patientData?.bmi ? foodDetails[getBMICategory(parseFloat(patientData.bmi)) as keyof typeof foodDetails] : null;
   const currentInsulinContent = activeInsulinSubTopic ? insulinContent[activeInsulinSubTopic as keyof typeof insulinContent] : null;
   const currentExerciseContent = activeExerciseSubTopic ? exerciseContent[activeExerciseSubTopic as keyof typeof exerciseContent] : null;
@@ -609,7 +614,11 @@ export default function Topics() {
       <h2 className={styles.title}>หัวข้อความรู้สำหรับคุณแม่</h2>
       <div className={styles.grid}>
         {topics.map((topic, idx) => (
-          <button key={topic.title} onClick={() => setOpen(idx)} className={styles.card}>
+          <button
+            key={topic.title}
+            onClick={() => setOpen(idx)}
+            className={`${styles.card} ${topic.title === 'ช่องทางการติดต่อ' ? styles.contactCard : ''}`}
+          >
             <div className={styles.cardContent}>
               <Image 
                 src={topic.icon} 
@@ -1053,9 +1062,31 @@ export default function Topics() {
               </>
             ) : (
               <>
-            <h3 className={styles.modalTitle}>{topics[open].title}</h3>
-            <pre className={styles.modalContent}>{topics[open].details}</pre>
+                <h3 className={styles.modalTitle}>{topics[open].title}</h3>
+                <pre className={styles.modalContent}>{topics[open].details}</pre>
               </>
+            )}
+
+            {open === contactTopicIndex && (
+              <div className={styles.contactModalContent}>
+                <p className={styles.lineOfficialText}>Line Official Account: เบาใจเรื่องเบาหวาน</p>
+                <Image
+                  src="/LineQrCode.png"
+                  alt="Line QR Code"
+                  width={200}
+                  height={200}
+                />
+                <p>
+                  <a
+                    href="https://lin.ee/FU5Fov47"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.lineLink}
+                  >
+                    LineID: @524russo
+                  </a>
+                </p>
+              </div>
             )}
 
             <div className={styles.modalButtonRow}>
