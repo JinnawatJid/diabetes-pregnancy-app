@@ -11,7 +11,7 @@ export default function Home() {
         </h1>
         <div className={styles.avatarContainer}>
           <Image 
-            src="/avatar.png" 
+            src="/newAvatar.png" 
             alt="NONG JAMSAI" 
             width={140} 
             height={140} 
