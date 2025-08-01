@@ -168,13 +168,17 @@
   grid-column: 1 / -1;
   justify-self: center;
   width: 100%;
-  max-width: 338px;
+  max-width: calc(50% - 12px);
 }
 
 @media (max-width: 600px) {
   .grid {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+  
+  .contactCard {
+    max-width: 100%;
   }
 }
 
