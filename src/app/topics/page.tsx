@@ -117,13 +117,26 @@ const topics = [
   },
 ];
 
+type StructuredContentItem = 
+  | { type: 'heading'; value: string }
+  | { type: 'ordered-list'; items: string[] }
+  | { type: 'unordered-list'; items: string[] }
+  | { type: 'image-with-reference' };
+
+type InsulinContentValue = {
+  title: string;
+  content: string[];
+  structuredContent?: StructuredContentItem[];
+  image?: string;
+};
+
 const insulinSubTopics = [
   { title: "ข้อควรระวังในการฉีดอินซูลิน" },
   { title: "ตำแหน่งการฉีดอินซูลิน" },
   { title: "วีดีโอ" },
 ];
 
-const insulinContent = {
+const insulinContent: { [key: string]: InsulinContentValue } = {
   "ข้อควรระวังในการฉีดอินซูลิน": {
     title: "ข้อควรระวังในการฉีดอินซูลิน",
     content: [
@@ -139,30 +152,32 @@ const insulinContent = {
   },
   "ตำแหน่งการฉีดอินซูลิน": {
     title: "ตำแหน่งการฉีดอินซูลิน",
-    content: [
-      `<b>ขั้นตอนการฉีดอินซูลิน</b>`,
-      `1. ล้างมือให้สะอาด`,
-      `2. เตรียมอุปกรณ์การฉีด`,
-      `3. เลือกตำแหน่งที่เหมาะสม`,
-      `4. ทำความสะอาดผิวหนัง`,
-      `5. ฉีดอินซูลินตามที่แพทย์แนะนำ`,
-      ``,
-      `<b>ตำแหน่งที่แนะนำในการฉีด</b>`,
-      `<ul style="margin: 0 0 1rem 1.5rem; padding: 0; text-align: left;">`,
-      `<li>หน้าท้อง (ห่างจากสะดือ 2 นิ้ว)</li>`,
-      `<li>ต้นแขนด้านนอก</li>`,
-      `<li>ต้นขาด้านนอก</li>`,
-      `<li>ก้น</li>`,
-      `</ul>`,
-      `<div style="width:100%;text-align:center;margin:1rem 0;"><img src="/Insulin_Injection.JPG" alt="ตำแหน่งการฉีดอินซูลิน" style="max-width:300px;width:100%;border-radius:16px;box-shadow:0 2px 8px rgba(30,136,229,0.08);" /></div>`,
-      `<b>ข้อควรระวัง</b>`,
-      `<ul style="margin: 0 0 1rem 1.5rem; padding: 0; text-align: left;">`,
-      `<li>เปลี่ยนตำแหน่งการฉีดทุกครั้ง</li>`,
-      `<li>ไม่ฉีดในบริเวณที่มีรอยแผลหรือการอักเสบ</li>`,
-      `<li>เก็บอินซูลินในตู้เย็น</li>`,
-      `<li>ตรวจสอบวันหมดอายุก่อนใช้</li>`,
-      `</ul>`
+    structuredContent: [
+      { type: 'heading', value: 'ขั้นตอนการฉีดอินซูลิน' },
+      { type: 'ordered-list', items: [
+        'ล้างมือให้สะอาด',
+        'เตรียมอุปกรณ์การฉีด',
+        'เลือกตำแหน่งที่เหมาะสม',
+        'ทำความสะอาดผิวหนัง',
+        'ฉีดอินซูลินตามที่แพทย์แนะนำ'
+      ]},
+      { type: 'heading', value: 'ตำแหน่งที่แนะนำในการฉีด' },
+      { type: 'unordered-list', items: [
+        'หน้าท้อง (ห่างจากสะดือ 2 นิ้ว)',
+        'ต้นแขนด้านนอก',
+        'ต้นขาด้านนอก',
+        'ก้น'
+      ]},
+      { type: 'image-with-reference' },
+      { type: 'heading', value: 'ข้อควรระวัง' },
+      { type: 'unordered-list', items: [
+        'เปลี่ยนตำแหน่งการฉีดทุกครั้ง',
+        'ไม่ฉีดในบริเวณที่มีรอยแผลหรือการอักเสบ',
+        'เก็บอินซูลินในตู้เย็น',
+        'ตรวจสอบวันหมดอายุก่อนใช้'
+      ]}
     ],
+    content: [], // Now empty, will be rendered by structuredContent
     image: "/insulin2.jpg",
   },
   "วีดีโอ": {
@@ -292,6 +307,49 @@ const complicationsContent = [
 function hasActivities(obj: any): obj is { activities: { image: string; title: string; description: string; }[] } {
   return obj && Array.isArray(obj.activities);
 }
+
+const Collapsible = ({ title, children }: { title: string, children: React.ReactNode }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div style={{ textAlign: 'left', marginTop: '0.5rem', fontSize: '14px', width: '100%', maxWidth: '300px', margin: '0 auto' }}>
+      <button 
+        onClick={() => setIsOpen(!isOpen)} 
+        style={{ 
+          background: 'none', 
+          border: 'none', 
+          color: '#1E88E5', 
+          cursor: 'pointer', 
+          padding: '0.25rem 0',
+          fontSize: '14px',
+          fontWeight: '600',
+          display: 'flex',
+          alignItems: 'center',
+          width: '100%',
+        }}
+      >
+        <span style={{ transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s', marginRight: '0.5rem' }}>
+          ▶
+        </span>
+        {title}
+      </button>
+      {isOpen && (
+        <div style={{ 
+          marginTop: '0.5rem', 
+          padding: '0.75rem', 
+          border: '1px solid #e3f2fd', 
+          borderRadius: '8px', 
+          backgroundColor: '#f8faff', 
+          color: '#37474F',
+          lineHeight: '1.6',
+          textAlign: 'justify'
+        }}>
+          {children}
+        </div>
+      )}
+    </div>
+  );
+};
 
 function hasContent(obj: any): obj is { content: string[] } {
   return obj && Array.isArray(obj.content);
@@ -852,21 +910,77 @@ export default function Topics() {
               <div className={styles.insulinModalContent}>
                 {activeInsulinSubTopic ? (
                   // Detailed View
-                  <div className={styles.insulinDetailContent}>
-                    <h3 className={styles.modalTitle}>{insulinContent[activeInsulinSubTopic as keyof typeof insulinContent].title}</h3>
-                    {insulinContent[activeInsulinSubTopic as keyof typeof insulinContent].content.map((text, i) => 
-                      <p key={i} dangerouslySetInnerHTML={{ __html: text }} />
-                    )}
-                    {currentInsulinContent && hasImage(currentInsulinContent) && (
-                        <Image 
-                          src={currentInsulinContent.image}
-                          alt={currentInsulinContent.title}
-                          width={300}
-                          height={200}
-                          className={styles.insulinDetailImage}
-                        />
-                     )}
-                  </div>
+                  (() => {
+                    const currentInsulinData = insulinContent[activeInsulinSubTopic as keyof typeof insulinContent];
+                    
+                    // New structured content renderer
+                    if (currentInsulinData.structuredContent && Array.isArray(currentInsulinData.structuredContent)) {
+                      return (
+                        <div className={styles.insulinDetailContent}>
+                          <h3 className={styles.modalTitle}>{currentInsulinData.title}</h3>
+                          {currentInsulinData.structuredContent.map((item: any, index: number) => {
+                            switch (item.type) {
+                              case 'heading':
+                                return <h4 key={index} style={{fontWeight: 'bold', marginBottom: '1rem'}}>{item.value}</h4>;
+                              case 'ordered-list':
+                                return (
+                                  <ol key={index} style={{paddingLeft: '2rem', marginBottom: '1rem'}}>
+                                    {item.items.map((li: string, i: number) => <li key={i}>{li}</li>)}
+                                  </ol>
+                                );
+                              case 'unordered-list':
+                                return (
+                                  <ul key={index} style={{paddingLeft: '2rem', marginBottom: '1rem', listStyleType: 'disc'}}>
+                                    {item.items.map((li: string, i: number) => <li key={i}>{li}</li>)}
+                                  </ul>
+                                );
+                              case 'image-with-reference':
+                                return (
+                                  <div key={index} style={{width:'100%',textAlign:'center',margin:'1rem 0'}}>
+                                    <Image src="/Insulin_Injection.JPG" alt="ตำแหน่งการฉีดอินซูลิน" width={300} height={300} style={{maxWidth:'300px',width:'100%', height:'auto', borderRadius:'16px',boxShadow:'0 2px 8px rgba(30,136,229,0.08)'}} />
+                                    <Collapsible title="อ้างอิง">
+                                      <p style={{margin:0, padding: 0, wordWrap: 'break-word', textAlign: 'left'}}>
+                                          Iconic Bestiary (ผู้สร้างสรรค)์. (2022). Insulin injection infographic vector. Diabetes treatment. Insulin shots area on human body. Vector illustration. [ภาพเวกเตอร]์, สืบค้นเมื่อ 15 สิงหาคม 2568, จาก: <a href="https://depositphotos.com/th/vector/insulin-injection-infographic-vector-diabetes-treatment-insulin-shots-area-human-632982418.html" target="_blank" rel="noopener noreferrer" style={{color: '#1E88E5', textDecoration: 'underline'}}>https://depositphotos.com/th/vector/insulin-injection-infographic-vector-diabetes-treatment-insulin-shots-area-human-632982418.html</a>
+                                      </p>
+                                    </Collapsible>
+                                  </div>
+                                );
+                              default:
+                                return null;
+                            }
+                          })}
+                          {currentInsulinContent && hasImage(currentInsulinContent) && (
+                            <Image 
+                              src={currentInsulinContent.image}
+                              alt={currentInsulinContent.title}
+                              width={300}
+                              height={200}
+                              className={styles.insulinDetailImage}
+                            />
+                          )}
+                        </div>
+                      );
+                    }
+            
+                    // Default rendering for other insulin sub-topics
+                    return (
+                      <div className={styles.insulinDetailContent}>
+                        <h3 className={styles.modalTitle}>{currentInsulinData.title}</h3>
+                        {currentInsulinData.content.map((text, i) => 
+                          <p key={i} dangerouslySetInnerHTML={{ __html: text }} />
+                        )}
+                        {currentInsulinContent && hasImage(currentInsulinContent) && (
+                            <Image 
+                              src={currentInsulinContent.image}
+                              alt={currentInsulinContent.title}
+                              width={300}
+                              height={200}
+                              className={styles.insulinDetailImage}
+                            />
+                         )}
+                      </div>
+                    );
+                  })()
                 ) : (
                   // Sub-topic Selection View
                   <>
