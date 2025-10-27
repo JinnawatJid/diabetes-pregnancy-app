@@ -1,0 +1,27 @@
+# Name of the workflow
+name: Keep Supabase Alive
+
+on:
+  # This runs the workflow at 00:00 UTC every day
+  # You can change the schedule. '0 0 */3 * *' would be every 3 days.
+  # See https://crontab.guru for help
+  schedule:
+    - cron: '0 0 * * *'
+    
+  # This line allows you to run the workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  ping-database:
+    # Runs on the latest version of Ubuntu
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Ping Supabase Database
+        # This step uses 'curl' to make an API request to one of your tables.
+        # It asks for 1 row ('limit=1') to be as lightweight as possible.
+        run: |
+          curl -X GET \
+          '${{ secrets.SUPABASE_URL }}/rest/v1/patients?select=*&limit=1' \
+          -H 'apikey: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}' \
+          -H 'Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}'
